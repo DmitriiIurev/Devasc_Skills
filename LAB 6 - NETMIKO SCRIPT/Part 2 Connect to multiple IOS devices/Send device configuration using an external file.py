@@ -1,6 +1,6 @@
 from netmiko import ConnectHandler
 
-# Define the device information
+# Create a list of devices with their connection details
 devices = [
     {
         'device_type': 'cisco_ios',
@@ -14,16 +14,32 @@ devices = [
         'username': 'admin',
         'password': 'pxl',
     },
-    
+    # Add more devices as needed
 ]
-# Send device configuration using an external file
-def send_config_file(devices, file_path):
-    with open(file_path, 'r') as file:
-        config_commands = file.read().splitlines()
-    send_config_commands(devices, config_commands)
-    
-    
 
-# Execute the functions
-send_config_file(devices, 'device_config.txt')
+# Specify the filename for the configuration file
+config_file = 'config.txt'
 
+# Read the configuration commands from the file
+with open(config_file, 'r') as file:
+    commands = file.read().splitlines()
+
+# Iterate over the devices and send configuration commands
+for device in devices:
+    try:
+        # Establish an SSH connection to the device
+        connection = ConnectHandler(**device)
+        print(f"Connected to {device['ip']} successfully.")
+
+        # Send configuration commands
+        output = connection.send_config_set(commands)
+        print(f"Output from {device['ip']}:")
+        print(output)
+
+        # Save the configuration (optional)
+        connection.send_command('write memory')
+        print(f"Configuration saved on {device['ip']}.\n")
+
+        # Close the SSH connection
+        connection.disconnect()
+        print(f"Disconnected from {device['ip']}.\n")
