@@ -1,0 +1,298 @@
+1.1 Install different tools/packages on Ubuntu DEVASC-LABVM: 
+• Task preparation and implementation:
+Python 3.8:
+Was already installed
+
+PIP:
+Was already installed
+
+Visual Studio Code:
+Was already installed
+
+Jypiter Notebook:
+sudo apt install jupyter-notebook
+jupyter-notebook --version
+
+Python IDLE:
+sudo apt install idle 
+
+• Task troubleshooting:
+There was no Jypiter and Python IDLE and because i installed it
+
+• Task verification:
+Python 3.8:
+python3
+
+PIP:
+pip --version or pip3 --version
+
+Visual Studio Code:
+code 
+
+Jypiter Notebook:
+jupyter-notebook
+
+1.2 Run geopy and timedate Python Scripts on the DEVASC-LABVM using the tools above (1.1): 
+• Task preparation and implementation: 
+Location.py:
+(Python 3.8):
+python3 location.py
+(Visual Studio Code):
+Run python file
+(Python IDLE):
+Open Python IDLE in Search Menu
+Klik Open
+Open location.py
+Klik op Run Module
+Script location.py was uitgevoerd
+(Jupyter-notebook):
+jupyter-notebook
+Open in New Python 3
+import location
+
+Timedate.py:
+(Python3.8):
+python3 timedate.py
+(Visual Studio Code):
+run python file
+(Python IDLE):
+Open Python IDLE in Search Menu
+Klik op Open
+Open timedate.py
+Run Module
+(Jupyter-notebook):
+jupyter-notebook
+Open in New Python 3
+Importeer script : import timedate
+
+Geopy-geocoders_location.py:
+(Python 3.8):
+python3 geopy-geocoders_location.py
+(Visual Studio Code):
+run python file
+(Python IDLE):
+Open Python IDLE in Search menu
+Klik op Open
+Opne geopy-geocoders_location.py
+Run Module
+(Jupyter-Notebook)
+jupyter-notebook
+Open in New Python 3
+import geopy-geocoders_location
+
+• Task troubleshooting:
+Location.py:
+Installeer geopy want die was niet gevonden.
+pip install geopy
+geopy-geocoders_location.py:
+Installeer folium want die was niet gevonden.
+pip install folium
+
+• Task verification:
+Photo
+
+1.4 Install different tools/packages on Ubuntu 22.04.01 LTS (deep dive exercise) ++ 
+• Task preparation and implementation:
+Python3.8:
+Sudo apt update
+Sudo apt -y upgrade
+Sudo apt install python3
+ 
+PIP:
+PIP was installed after python3.8
+
+Visual studio code:
+sudo apt-get install wget gpg
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+sudo sh -c 'echo "deb [arch=amd64, arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo apt install apt-transport-https
+sudo apt update
+sudo apt install code 
+
+Jupyter-notebook: 
+sudo apt install jupyter-notebook
+ 
+Python-IDLE:
+sudo apt install idle
+
+• Task troubleshooting:
+Python3.8:
+Deze website heb ik gebruikt:
+https://www.itsupportwale.com/blog/how-to-upgrade-to-python-3-8-on-ubuntu-18-04-lts/
+
+Visual studio code:
+Deze website heb ik gebruikt:
+https://code.visualstudio.com/docs/setup/linux
+ 
+• Task verification: 
+Python 3.8:
+python3 --version
+ 
+PIP:
+Pip3 --version
+ 
+Visual Studio code:
+code
+  
+Jupyter-notebook:
+jupyter-notebook
+ 
+• Task preparation and implementation: 
+Location.py:
+(Python 3.8):
+python3 location.py
+(Visual Studio Code):
+Run python file
+(Python IDLE):
+Open Python IDLE in Search Menu
+Klik Open
+Open location.py
+Klik op Run Module
+Script location.py was uitgevoerd
+(Jupyter-notebook):
+jupyter-notebook
+Open in New Python 3
+import location
+
+Timedate.py:
+(Python3.8):
+python3 timedate.py
+(Visual Studio Code):
+run python file
+(Python IDLE):
+Open Python IDLE in Search Menu
+Klik op Open
+Open timedate.py
+Run Module
+(Jupyter-notebook):
+jupyter-notebook
+Open in New Python 3
+Importeer script : import timedate
+
+Geopy-geocoders_location.py:
+(Python 3.8):
+python3 geopy-geocoders_location.py
+(Visual Studio Code):
+run python file
+(Python IDLE):
+Open Python IDLE in Search menu
+Klik op Open
+Opne geopy-geocoders_location.py
+Run Module
+(Jupyter-Notebook)
+jupyter-notebook
+Open in New Python 3
+import geopy-geocoders_location
+• Task troubleshooting:
+Location.py:
+Pip install geopy
+Geopy-geocoders.location.py
+Pip install folium
+ 
+• Task verification:
+Python 3.8:
+python3 --version
+ 
+PIP:
+Pip3 --version
+ 
+Visual Studio code:
+code
+ 
+Jupyter-notebook:
+jupyter-notebook
+
+Location.py: 
+Timedate.py:
+Geopy-geocoders_location.py:
+Photo
+
+Install different tools/packages on Windows OS (deep dive exercise) ++ 
+• Task preparation and implementation:
+Python3.11:
+Open python.exe
+Vink Add Python 3.11 to PATH aan en klik op Install Now
+PIP:
+Pip was al geïnstalleerd tijdens Python installatie
+ 
+Visual Studio Code:
+Deze link heb ik gebruikt:
+https://code.visualstudio.com/download
+Open VSCode.exe
+Accept agreement en klik op Next
+Kies juiste pad van VS Code
+Klik op Next(3x)
+Klik op Install
+Klik op Finish
+
+Jupyter notebook:
+In het educba.com installeer je Jupyter notebook via Anaconda
+Open Source Link
+Klik op Download
+Open Anaconda.exe
+Klik op Next
+Klik op I Agree
+Installeer voor jezelf en klik op Next
+Kies juiste pad en klik op Next
+Klik op Install
+Klik op Finish
+Open Anaconda Prompt
+conda install Jupyter
+
+Python IDLE:
+Python IDLE wordt ook geïnstalleerd tijden Python installatie
+ 
+• Task troubleshooting: 
+
+• Task verification: 
+Python3 --version
+ 
+PIP:
+Pip3 --version
+ 
+Visual Studio Code:
+Open Visual Studio Code
+
+Jupyter-Notebook:
+jupyter notebook
+  
+Python IDLE:
+Open Python IDLE
+ 
+• Task troubleshooting:
+Python3.11:
+Deze link heb ik gebruikt:
+https://www.python.org/downloads/release/python-3113/
+
+Jupyter notebook:
+Deze links heb ik gebruikt
+https://www.educba.com/install-jupyter-notebook/
+https://www.anaconda.com/products/distribution
+
+Visual Studio Code:
+Deze link heb ik gebruikt:
+https://code.visualstudio.com/download
+• Task verification:
+Geopy-geocoders_location.py:
+(Python3.11):
+(Python IDLE):
+(Jupyter-notebook):
+(Visual Studio Code):
+ 
+Timedate.py:
+(Python3.11):
+(Python IDLE):
+(Jupyter-notebook):
+(Visual Studio Code):
+ 
+Location.py:
+(Python3.11):
+(Python IDLE):
+(Jupyter-notebook):
+(Visual Studio Code):
+
+
+
+
+
