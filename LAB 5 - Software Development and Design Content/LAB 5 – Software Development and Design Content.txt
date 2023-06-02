@@ -325,18 +325,89 @@ Part 7: Integrating Git with GitHub
 Step 1: Create a GitHub Account
 Step 2: Log into your GitHub Account Create a Repository
 Step 3: Create a Repository
+Repository name: devasc-study-team
+Description: Working together to pass the DEVASC exam
+Public/Private: Private
+Select: Create repository
+
 Step 4: Create a new directory devasc-study-team
+devasc@labvm:~$ cd ~/labs/devnet-src/git-intro
+devasc@labvm:~/labs/devnet-src/git-intro$ mkdir devasc-study-team
+
 Step 5: Change directory to devasc-study-team
+devasc@labvm:~/labs/devnet-src/git-intro$ cd devasc-study-team
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$
+
 Step 6: Copy the DEVASC file
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ cp ../DEVASC.txt
+
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ ls DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ cat DEVASC.txt
+I am on my way to passing the DevNet DEVASC exam
+I am beginning to understand Git!
+This text was added originally while in the feature branch
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$
+
 Step 7: Initialize a new Git repository
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git init Initialized empty Git repository in /home/devasc/src/git-intro/devasc-study-team/.git/
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$
+
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git config --list
+user.name=SampleUser
+user.email=sample@example.com
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$
+
+devasc@labvm:~$ git config --global user.name "GitHub username"
+devasc@labvm:~$ git config --global user.email GitHub-email-address
+
 Step 8: Point Git repository to GitHub repository
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git remote add origin https://github.com/github-username/devasc-study-team.git
+
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git remote --verbose
+origin https://github.com/username/devasc-study-team.git (fetch)
+origin https://github.com/username/devasc-study-team.git (push)
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$
+
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git log fatal: your current branch 'master' does not have any commits yet
+
 Step 9: Stage and Commit the DEVASC.txt file
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git add DEVASC.txt
+
+"Add DEVASC.txt file to devasc-study-team" [master (root-commit) c60635f] Add DEVASC.txt file to devasc-study-team
+1 file changed, 3 insertions(+)
+create mode 100644 DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$
+
 Step 10: Verify the commit
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git log commit c60635fe4a1f85667641afb9373e7f49a287bdd6 (HEAD -> master) Author: username <user@example.com>
+Date: Mon Apr 20 02:48:21 2020 +0000
+Add DEVASC.txt file to devasc-study-team
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$
+
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git status
+On branch master nothing to commit, working tree clean
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$
+
 Step 11: Send (push) the file from Git to GitHub
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git push origin master
+Username for 'https://github.com': username
+Password for 'https://username@github.com': Personal Access Token
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 347 bytes | 347.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0) To https://github.com/username/devasc-study-team.git
+* [new branch] master -> master
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$
+
 Step 12: Verify file on GitHub
 
 Create a Python Unit Test
-
 Part 1: Launch the DEVASC VM
 
 Part 2: Explore Options in the unittest Framework
