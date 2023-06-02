@@ -1,14 +1,107 @@
 Part 1: Connecting to a single iOS device
 - Sending single show command
+print("Connecting via SSH => show interface status (brief)")
+from netmiko import ConnectHandler
+sshCli = ConnectHandler(
+    device_type="cisco_ios",
+    host=" 10.125.100.187",
+    port="22",
+    username="admin",
+    password="pxl"
+    )
+output=sshCli.send_command("show ip interface brief")
+print(output)
+
 - -Sending multiple show commands
+print("Connecting via SSH => show interface status (brief)")
+from netmiko import ConnectHandler
+sshCli = ConnectHandler(
+    device_type="cisco_ios",
+    host="10.125.100.187",
+    port="22",
+    username="admin",
+    password="pxl",
+    secret="cisco",
+    )
+output1=sshCli.send_command("show ip interface brief")
+output2=sshCli.send_command("show version")
+print(output1 + "\n\n" + output2)
 - Send multiple configuration commands to a single device
+cisco_Switch = {
+    "device_type": "cisco_ios",
+    "host": "10.125.100.187,
+    "username": "admin",
+    "password": "pxl",
+    "secret": "cisco"}
+with ConnectHandler(**cisco_Switch) as net_connect:
+    net_connect.enable()
+    output - net_connect.send_config_from_file('iosv_l3_config.txt')
+    print (output)
+    net_connect.disconnect()
+from netmiko import ConnectHandler
+# Define the device information
+device = {
+    'device_type': 'cisco_ios',
+    'ip': '10.125.100.187',
+    'username': 'admin',
+    'password': 'pxl',
+    'secret': 'cisco',
+}
 
 Part 2: Connect to multiple IOS devices
 - Send show commands to multiple devices
 - Send configuration commands to multiple devices
 - Run show commands and save the output
 - Backup the device configurations
+from netmiko import ConnectHandler
+device = {
+    'device_type': 'cisco_ios',
+    'ip': '10.125.100.187',
+    'username': 'admin',
+    'password': 'pxl',
+    'secret': 'cisco',
+}
+net_connect = ConnectHandler(**device)
+net_connect.enable()
+output = net_connect.send_command('show running-config')
+filename = 'lab-ra08-a-sw03-confg'
+with open(filename, 'w') as f:
+    f.write(output)
+print(f"Device configuration saved to {filename}")
+net_connect.disconnect()
 - Configure a subset of Interfaces
+from netmiko import ConnectHandler
+# Define the device information
+device = {
+    'device_type': 'cisco_ios',
+    'ip': '10.125.100.187',
+    'username': 'admin',
+    'password': 'pxl',
+    'secret': 'cisco',
+}
+
+# Define the interfaces to configure
+interfaces = ['FastEthernet0/9', 'FastEthernet0/10', 'FastEthernet0/11']
+
+# Define the configuration commands for the interfaces
+interface_config_commands = [
+    'description Configured by Netmiko',
+    'ip address 10.125.100.187',
+    'no shutdown',
+]
+# Establish an SSH connection to the device
+net_connect = ConnectHandler(**device)
+net_connect.enable()
+# Configure each interface in the subset
+for interface in interfaces:
+    # Enter interface configuration mode
+    config_commands = [f'interface {interface}']
+    output = net_connect.send_config_set(config_commands)
+    # Apply configuration commands for the interface
+    output += net_connect.send_config_set(interface_config_commands)
+    print(f"Configuration applied to interface {interface}:\n{output}")
+# Disconnect from the device
+net_connect.disconnect()
 - Send device configuration using an external file
 - Connect using a Python Dictionary
 - Execute a script with a Function or classes
