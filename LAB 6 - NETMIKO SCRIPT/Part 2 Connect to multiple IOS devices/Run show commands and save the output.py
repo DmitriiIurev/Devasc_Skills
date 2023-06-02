@@ -1,6 +1,6 @@
 from netmiko import ConnectHandler
 
-# Define the device information
+# Create a list of devices with their connection details
 devices = [
     {
         'device_type': 'cisco_ios',
@@ -16,23 +16,36 @@ devices = [
     },
     # Add more devices as needed
 ]
-# Run show commands and save the output
-def run_show_commands_save_output(devices, commands):
-    for device in devices:
+
+# Show commands to be executed on the devices
+commands = [
+    'show version',
+    'show interfaces',
+    # Add more show commands as needed
+]
+
+# Iterate over the devices and execute show commands
+for device in devices:
+    try:
+        # Establish an SSH connection to the device
         connection = ConnectHandler(**device)
-        print(f"\n==== Device: {device['ip']} ====")
-        for command in commands:
-            output = connection.send_command(command)
-            filename = f"{device['ip']}_output.txt"
-            with open(filename, 'a') as file:
-                file.write(f"Command: {command}\n{output}\n\n")
-            print(f"Command: {command}\nOutput saved to {filename}")
+        print(f"Connected to {device['ip']} successfully.")
+
+        # Create a filename for the output based on the device IP
+        filename = f"{device['ip']}_output.txt"
+
+        # Open the file in write mode
+        with open(filename, 'w') as file:
+            # Iterate over the show commands
+            for command in commands:
+                # Execute the command and write the output to the file
+                output = connection.send_command(command)
+                file.write(f"Command: {command}\n")
+                file.write(output)
+                file.write('\n')
+
+        print(f"Output from {device['ip']} saved to {filename}.\n")
+
+        # Close the SSH connection
         connection.disconnect()
-
-
-# Define show commands
-show_commands = ['show interfaces', 'show ip route']
-
-# Execute the functions
-run_show_commands_save_output(devices, show_commands)
-
+        print(f"Disconnected from {device['ip']}.\n")
