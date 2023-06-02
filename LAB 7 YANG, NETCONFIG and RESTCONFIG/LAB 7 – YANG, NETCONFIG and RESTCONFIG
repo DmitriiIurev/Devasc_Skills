@@ -241,8 +241,6 @@ host="192.168.56.101",
 port=830,
 username="cisco",
 password="cisco123!",
-Lab - Use NETCONF to Access an IOS XE Device
-© 2020 - 2020 Cisco and/or its affiliates. All rights reserved. Cisco Public Page 7 of 16 www.netacad.com
 hostkey_verify=False
 )
 
