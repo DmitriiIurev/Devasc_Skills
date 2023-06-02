@@ -642,8 +642,6 @@ xmlns="http://netconfcentral.org/ns/test">9</int8.1>
 </edit-config>
 </rpc>
 
-
-
 Step 1: Build a script to parse the XML data
 import xml.etree.ElementTree as ET
 import re
