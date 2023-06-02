@@ -4,50 +4,322 @@ Part 1: Launch the DEVASC VM
 
 Part 2: Initializing Git
 Step 1: Open a terminal in the DEVASC-LABVM
+
 Step 2: Initialize a Git Repository
+devasc@labvm:~$ git config --global user.name "SampleUser"
+devasc@labvm:~$ git config --global user.email sample@example.com
+
+devasc@labvm:~$ git config --list
+user.name=SampleUser
+user.email=sample@example.com
+devasc@labvm:~$
+
+devasc@labvm:~$ cd labs/devnet-src/
+devasc@labvm:~/labs/devnet-src$
+
+devasc@labvm:~/labs/devnet-src$ mkdir git-intro
+devasc@labvm:~/labs/devnet-src$ cd git-intro
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git init
+Initialized empty Git repository in /home/devasc/labs/devnet-src/git-intro/.git/
+devasc@labvm:~/labs/devnet-src/git-intro$ ls -a . .. .git
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git status On branch master
+No commits yet
+nothing to commit (create/copy files and use "git add" to track)
+devasc@labvm:~/labs/devnet-src/git-intro$
 
 Part 3: Staging and Committing a File in the Repository
 Step 1: Create a file
+
+devasc@labvm:~/labs/devnet-src/git-intro$ echo "I am on my way to passing the Cisco DEVASC exam" > DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ echo "I am on my way to passing the Cisco DEVASC exam" > DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ ls -la
+total 16
+drwxrwxr-x 3 devasc devasc 4096 Apr 17 20:38 .
+drwxrwxr-x 5 devasc devasc 4096 Apr 17 19:50 .. -rw-rw-r-- 1 devasc devasc 48 Apr 17 20:38 DEVASC.txt
+drwxrwxr-x 7 devasc devasc 4096 Apr 17 19:57 .git
+evasc@labvm:~/src/git-intro$ cat DEVASC.txt
+I am on my way to passing the Cisco DEVASC exam
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 2: Examine the Repository Status
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git status
+On branch master
+No commits yet
+Untracked files:
+(use "git add <file>..." to include in what will be committed) DEVASC.txt
+nothing added to commit but untracked files present (use "git add" to track)
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 3: Staging the File
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git add DEVASC.txt
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git status
+On branch master
+No commits yet
+Changes to be committed:
+(use "git rm --cached <file>..." to unstage) new file: DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 4: Committing a File
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -m "Committing DEVASC.txt to begin tracking changes" [master (root-commit) b510f8e] Committing DEVASC.txt to begin tracking changes
+1 file changed, 1 insertion(+)
+create mode 100644 DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 5: Viewing the Commit History
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git log commit b510f8e5f9f63c97432d108a0413567552c07356 (HEAD -> master) Author: Sample User <sample@example.com> Date: Sat Apr 18 18:03:28 2020 +0000
+Committing DEVASC.txt to begin tracking changes
+devasc@labvm:~/labs/devnet-src/git-intro$
 
 Part 4: Modifying the File and Tracking the Changes
 Step 1: Modify the file
+devasc@labvm:~/labs/devnet-src/git-intro$ echo "I am beginning to understand Git!" >> DEVASC.txt
+
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt
+I am on my way to passing the Cisco DEVASC exam
+I am beginning to understand Git!
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 2: Verify the change to the repository
+devasc@labvm:~/labs/devnet-src/git-intro$ git status
+On branch master
+Changes not staged for commit:
+(use "git add <file>..." to update what will be committed)
+(use "git restore <file>..." to discard changes in working directory) modified: DEVASC.txt
+
 Step 3: Stage the modified file
+devasc@labvm:~/labs/devnet-src/git-intro$ git add DEVASC.txt
+
+
 Step 4: Commit the staged file
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -m "Added additional line to file" [master 9f5c4c5] Added additional line to file
+1 file changed, 1 insertion(+)
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 5: Verify the changes in the repository
+devasc@labvm:~/labs/devnet-src/git-intro$ git log commit 9f5c4c5d630e88abe2a873fe48144e25ebe7bd6a (HEAD -> master)
+Author: Sample User <sample@example.com> Date: Sat Apr 18 19:17:50 2020 +0000
+Added additional line to file
+commit b510f8e5f9f63c97432d108a0413567552c07356
+Author: Sample User <sample@example.com> Date: Sat Apr 18 18:03:28 2020 +0000
+Committing DEVASC.txt to begin tracking changes
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git diff b510f8e 9f5c4c5
+
+diff --git a/DEVASC.txt b/DEVASC.txt
+index 93cd3fb..085273f 100644
+--- a/DEVASC.txt
++++ b/DEVASC.txt
+@@ -1 +1,2 @@
+I am on my way to passing the Cisco DEVASC exam +I am beginning to understand Git!
+devasc@labvm:~/labs/devnet-src/git-intro$
 
 Part 5: Branches and Merging
 Step 1: Create a new branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch feature
+
 Step 2: Verify current branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch
+feature * master
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 3: Checkout the new branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git checkout feature
+
 Step 4: Verify current branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch * feature
+master
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ echo "This text was added originally while in the feature branch" >> DEVASC.txt
+
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt
+I am on my way to passing the Cisco DEVASC exam
+
+I am beginning to understand Git! This text was added originally while in the feature branch
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 5: Stage the modified file in the feature branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git add DEVASC.txt
+
+On branch feature
+Changes to be committed:
+(use "git restore --staged <file>..." to unstage) modified: DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 6: Commit the staged file in the feature branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -m "Added a third line in feature branch" [feature cd828a7] Added a third line in feature branch
+1 file changed, 1 insertion(+)
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git log commit cd828a73102cf308981d6290113c358cbd387620 (HEAD -> feature)
+Author: Sample User <sample@example.com>
+Date: Sat Apr 18 22:59:48 2020 +0000
+Added a third line in feature branch
+commit 9f5c4c5d630e88abe2a873fe48144e25ebe7bd6a (master)
+Author: Sample User <sample@example.com>
+Date: Sat Apr 18 19:17:50 2020 +0000
+Added additional line to file
+commit b510f8e5f9f63c97432d108a0413567552c07356
+Author: Sample User <sample@example.com>
+Date: Sat Apr 18 18:03:28 2020 +0000
+Committing DEVASC.txt to begin tracking changes
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 7: Checkout the master branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git checkout master
+Switched to branch 'master'
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch
+feature * master
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 8: Merge file contents from feature to master branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git merge feature
+Updating 9f5c4c5..cd828a7
+Fast-forward DEVASC.txt | 1 + 1 file changed, 1 insertion(+)
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt
+I am on my way to passing the Cisco DEVASC exam
+I am beginning to understand Git! This text was added originally while in the feature branch
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 9: Deleting a branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch feature
+* master
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch -d feature Deleted branch feature (was cd828a7).
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch
+* master
+devasc@labvm:~/labs/devnet-src/git-intro$
 
 Part 6: Handling Merge Conflicts
 Step 1: Create a new branch test
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch test
+
 Step 2: Checkout the branch test
+devasc@labvm:~/labs/devnet-src/git-intro$ git checkout test
+Switched to branch 'test'
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch
+master * test
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 3: Verify the current contents of DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt I am on my way to passing the Cisco DEVASC exam
+I am beginning to understand Git!
+This text was added originally while in the feature branch
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 4: Modify the contents of DEVASC.txt in the test branch
+devasc@labvm:~/labs/devnet-src/git-intro$ sed -i 's/Cisco/NetAcad/' DEVASC.txt
+
 Step 5: Verify the contents of the modified DEVASC.txt in the test branch
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt I am on my way to passing the NetAcad DEVASC exam
+I am beginning to understand Git!
+This text was added originally while in the feature branch
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 6: Stage and commit the test branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -a -m "Change Cisco to NetAcad"
+[test b6130a6] Change Cisco to NetAcad
+1 file changed, 1 insertion(+), 1 deletion(-)
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 7: Checkout the master branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git checkout master
+Switched to branch 'master'
+devasc@labvm:~/labs/devnet-src/git-intro$
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch * master
+test
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 8: Modify the contents of DEVASC.txt in the master branch
+devasc@labvm:~/labs/devnet-src/git-intro$ sed -i 's/Cisco/DevNet/' DEVASC.txt
+
 Step 9: Verify the contents of the modified DEVASC.txt in the master branch
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt I am on my way to passing the DevNet DEVASC exam
+I am beginning to understand Git!
+This text was added originally while in the feature branch
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 10: Stage and commit the master branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -a -m "Changed Cisco to DevNet"
+[master 72996c0] Changed Cisco to DevNet
+1 file changed, 1 insertion(+), 1 deletion(-)
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 11: Attempt to merge the test branch into the master branch
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git merge test
+Auto-merging DEVASC.txt CONFLICT (content): Merge conflict in DEVASC.txt
+Automatic merge failed; fix conflicts and then commit the result.
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 12: Find the conflict
+devasc@labvm:~/labs/devnet-src/git-intro$ git log commit 72996c09fa0ac5dd0b8ab9ec9f8530ae2c5c4eb6 (HEAD -> master)
+Author: Sample User <sample@example.com>
+Date: Sun Apr 19 00:36:05 2020 +0000
+Changed Cisco to DevNet
+<output omitted>
+
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt <<<<<<< HEAD I am on my way to passing the DevNet DEVASC exam
+======= I am on my way to passing the NetAcad DEVASC exam >>>>>>> test
+I am beginning to understand Git!
+This text was added originally while in the feature branch
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 13: Manually edit the DEVASC.txt file to remove the conflicting text
+
+devasc@labvm:~/labs/devnet-src/git-intro$ vim DEVASC.txt
+
+<<<<<<< HEAD
+I am on my way to passing the DevNet DEVASC exam ======= I am on my way to passing the NetAcad DEVASC exam >>>>>>> test
+I am beginning to understand Git!
+This text was added originally while in the feature branch
+
+ESC
+:
+wq
+<Enter or Return>
+
 Step 14: Verify your edits of DEVASC.txt in the master branch
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt I am on my way to passing the DevNet DEVASC exam
+I am beginning to understand Git!
+This text was added originally while in the feature branch
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 15: Stage and commit the master branch
+devasc@labvm:~/labs/devnet-src/git-intro$ git add DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -a -m "Manually merged from test branch"
+[master 22d3da4] Manually merged from test branch
+devasc@labvm:~/labs/devnet-src/git-intro$
+
 Step 16: Verify the commit
+devasc@labvm:~/labs/devnet-src/git-intro$ git log commit 22d3da41e00549ce69dc145a84884af6a1697734 (HEAD -> master) Merge: 72996c0 b6130a6
+Author: Sample User <sample@example.com>
+Date: Sun Apr 19 01:09:53 2020 +0000
+manually merged from branch test
+<output omitted>
+
 
 Part 7: Integrating Git with GitHub
 Step 1: Create a GitHub Account
