@@ -29,7 +29,7 @@ device = {
 config_commands = [
     'interface FastEthernet0/10',
     'description Netmiko Example',
-    'ip address 192.168.1.1 255.255.255.0',
+    'ip address 10.125.100.181 255.255.255.0',
     'no shutdown',
     'exit',
     'interface FastEthernet0/11',
