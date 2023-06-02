@@ -307,37 +307,37 @@ Part 2: Network Troubleshooting
 Document your findings and important commands.
 
 LAB-RA08-A-SW03
-ip ssh version 2: is een opdracht die wordt gebruikt in Cisco IOS-netwerkapparaten om SSH versie 2 in te schakelen voor beheer op afstand. SSH-versie 2 is de veiligere en bijgewerkte versie van SSH en biedt verbeterde beveiligingsfuncties en betere coderingsalgoritmen dan SSH versie 1.
-ip ssh time-out 60: is een configuratieopdracht die de time-outwaarde voor inactiviteit voor Secure Shell-sessies (SSH) op een netwerkapparaat instelt op 60 minuten.
-no ip domain-lookup: is een configuratieopdracht die wordt gebruikt op Cisco-netwerkapparaten om de DNS-naam omzettingsfunctie uit te schakelen. 
-ip-domein-name: is een configuratieopdracht die wordt gebruikt op Cisco-netwerkapparaten om de domeinnaam op te geven die wordt toegevoegd aan een niet-gekwalificeerde hostnaam op het apparaat. 
-crypto key generate rsa general-keys modulus 1024: wordt gebruikt op Cisco-netwerkapparaten om een RSA-sleutelpaar te genereren voor veilige gecodeerde communicatie. Het sleutelwoord "general-keys" geeft aan dat het sleutelpaar voor algemene doeleinden zal worden gebruikt, zoals voor SSH-authenticatie. 
-username admin password pxl: om in te loggen
-enable secret: wordt gebruikt op Cisco-netwerkapparaten om een wachtwoord in te stellen voor de geprivilegieerde EXEC-modus, die toegang biedt tot geavanceerde configuratie- en beheeropdrachten op het apparaat.
-line console 0: wordt gebruikt op Cisco-netwerkapparaten om de instellingen voor de consolepoort te configureren. 
-password pxl: voor veiligheid
-service password encryption: wordt gebruikt op Cisco-netwerkapparaten om wachtwoorden in platte tekst te coderen in de apparaatconfiguratie. W
-spanning-tree mode pvst: wordt gebruikt op Cisco-netwerkswitches om de Spanning Tree Protocol (STP)-modus te configureren als PVST+ (Per-VLAN Spanning Tree Plus). 
-switchport mode access: wordt gebruikt om een switchpoort als toegangspoort te configureren. 
-switchport access vlan 10: wordt gebruikt om een switchpoort als toegangspoort te configureren en toe te wijzen aan VLAN 10. 
-line vty 0 4: wordt gebruikt op Cisco-netwerkapparaten om de instellingen te configureren voor virtuele terminallijnen, die worden gebruikt voor externe toegang tot het apparaat met behulp van protocollen zoals Telnet of SSH.
-login local: wordt gebruikt op Cisco-netwerkapparaten om de aanmeldingsverificatiemethode te configureren voor lokale gebruikers die toegang krijgen tot het apparaat via de console of virtuele terminallijnen. 
-transport input ssh: wordt gebruikt op Cisco-netwerkapparaten om SSH in te schakelen als transportprotocol voor externe toegang tot het apparaat via de console of virtuele terminallijnen.
-switchport mode trunk: wordt gebruikt op Cisco-netwerkapparaten om een switchpoort te configureren voor gebruik in trunk-modus. 
-switchport trunk allowed vlan 10,40: wordt gebruikt op Cisco-netwerkapparaten om de lijst met VLAN's te configureren die via een trunkpoort mogen worden vervoerd. 
+ip ssh version 2: is a command used in Cisco IOS network devices to enable SSH version 2 for remote management. SSH version 2 is the more secure and updated version of SSH and provides enhanced security features and better encryption algorithms than SSH version 1.
+ip ssh timeout 60: is a configuration command that sets the inactivity timeout value for Secure Shell (SSH) sessions on a network device to 60 minutes.
+no ip domain-lookup: is a configuration command used on Cisco network devices to disable the DNS name conversion feature. 
+ip domain-name: is a configuration command used on Cisco networking devices to specify the domain name to be appended to a non-qualified hostname on the device. 
+crypto key generate rsa general-keys modulus 1024: is used on Cisco networking devices to generate an RSA key pair for secure encrypted communication. The keyword "general-keys" indicates that the key pair will be used for general purposes, such as for SSH authentication. 
+username admin password pxl: to log in.
+enable secret: used on Cisco networking devices to set a password for privileged EXEC mode, which provides access to advanced configuration and management commands on the device.
+line console 0: used on Cisco networking devices to configure console port settings. 
+password pxl: for security
+service password encryption: used on Cisco networking devices to encrypt plain-text passwords in device configuration. W
+spanning-tree mode pvst: used on Cisco network switches to configure Spanning Tree Protocol (STP) mode as PVST+ (Per-VLAN Spanning Tree Plus). 
+switchport mode access: used to configure a switchport as an access port. 
+switchport access vlan 10: is used to configure a switch port as an access port and assign it to VLAN 10. 
+line vty 0 4: used on Cisco network devices to configure settings for virtual terminal lines, which are used for remote access to the device using protocols such as Telnet or SSH.
+login local: used on Cisco network devices to configure the login authentication method for local users accessing the device via console or virtual terminal lines. 
+transport input ssh: is used on Cisco network devices to enable SSH as the transport protocol for remote access to the device via the console or virtual terminal lines.
+switchport mode trunk: used on Cisco networking devices to configure a switchport for use in trunk mode. 
+switchport trunk allowed vlan 10,40: used on Cisco network devices to configure the list of VLANs that are allowed to be transported through a trunk port. 
 
 LAB-RA08-C-R03:
 encapsulation dot1Q 10: is used to configure a subinterface on a Cisco network device with IEEE 802.1Q VLAN encapsulation and associate it with VLAN 10. µ
 standby 10 ip 172.16.8.1: is used to configure a virtual IP address for a Cisco HSRP (Hot Standby Router Protocol) group 10. 
 router-id 10.199.66.108: is used in the configuration of the OSPF routing protocol on Cisco network devices to manually specify the OSPF router ID.
 network 10.199.66.96 0.0.0.31 area 0: is used in the configuration of the OSPF routing protocol on Cisco network devices to advertise the networks to be included in the OSPF routing process.
-tftp source-interface GigabitEthernet0/0.10:wordt vaak gebruikt om configuratiebestanden, firmware-updates en andere bestanden tussen netwerkapparaten uit te wisselen.
-interface GigabitEthernet0/0.10: wordt gebruikt in Cisco IOS om de interfaceconfiguratiemodus voor een specifieke subinterface te openen. 
-encapsulation dot1Q 10: wordt gebruikt om een subinterface op een Cisco-netwerkapparaat met IEEE 802.1Q VLAN-inkapseling te configureren en te associëren met VLAN 10. 
-standby 10 ip 172.16.8.1: wordt gebruikt om een virtueel IP-adres te configureren voor een Cisco HSRP (Hot Standby Router Protocol) groep 10. H
-ip ospf 10 area 0: wordt gebruikt om het OSPF-protocol (Open Shortest Path First) op een interface in te schakelen en te configureren om te werken in OSPF-gebied 0. OSPF is een routeringsprotocol dat wordt gebruikt om routeringsinformatie uit te wisselen tussen routers in een IP-netwerk.
-router-id 10.199.66.108: wordt gebruikt in de configuratie van het OSPF-routeringsprotocol (Open Shortest Path First) op Cisco-netwerkapparaten om handmatig de OSPF-router-ID op te geven.
-network 10.199.66.96 0.0.0.31 area 0: wordt gebruikt in de configuratie van het OSPF-routeringsprotocol (Open Shortest Path First) op Cisco-netwerkapparaten om de netwerken aan te kondigen die moeten worden opgenomen in het OSPF-routeringsproces.
+tftp source interface GigabitEthernet0/0.10:is often used to exchange configuration files, firmware updates and other files between network devices.
+interface GigabitEthernet0/0.10: used in Cisco IOS to access the interface configuration mode for a specific subinterface. 
+encapsulation dot1Q 10: used to configure a subinterface on a Cisco network device with IEEE 802.1Q VLAN encapsulation and associate it with VLAN 10. 
+standby 10 ip 172.16.8.1: Used to configure a virtual IP address for a Cisco HSRP (Hot Standby Router Protocol) group 10. H
+ip ospf 10 area 0: used to enable and configure the Open Shortest Path First (OSPF) protocol on an interface to operate in OSPF area 0. OSPF is a routing protocol used to exchange routing information between routers in an IP network.
+router-id 10.199.66.108: used in the Open Shortest Path First (OSPF) routing protocol configuration on Cisco network devices to manually specify the OSPF router ID.
+network 10.199.66.96 0.0.0.31 area 0: Used in the Open Shortest Path First (OSPF) routing protocol configuration on Cisco network devices to announce the networks to be included in the OSPF routing process.
 
 
 
