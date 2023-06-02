@@ -624,16 +624,132 @@ Parse Different Data Types with Python
 Part 1: Launch the DEVASC VM
 
 Part 2: Parse XML in Python
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="1"
+xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+<edit-config>
+<target>
+<candidate/>
+</target>
+<default-operation>merge</default-operation>
+<test-option>set</test-option>
+<config>
+<int8.1
+xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+nc:operation="create"
+xmlns="http://netconfcentral.org/ns/test">9</int8.1>
+</config>
+</edit-config>
+</rpc>
+
+
+
 Step 1: Build a script to parse the XML data
+import xml.etree.ElementTree as ET
+import re
+
+xml = ET.parse("myfile.xml")
+root = xml.getroot()
+
+ns = re.match('{.*}', root.tag).group(0)
+editconf = root.find("{}edit-config".format(ns))
+defop = editconf.find("{}default-operation".format(ns))
+testop = editconf.find("{}test-option".format(ns))
+
+print("The default-operation contains: {}".format(defop.text))
+print("The test-option contains: {}".format(testop.text))
+
 Step 2: Run the script
+devasc@labvm:~/labs/devnet-src/parsing$ python3 parsexml.py
+The default-operation contains: merge
+The test-option contains: set
+devasc@labvm:~/labs/devnet-src/parsing$
 
 Part 3: Parse JSON in Python
+{
+"access_token":"ZDI3MGEyYzQtNmFlNS00NDNhLWFlNzAtZGVjNjE0MGU1OGZmZWNmZDEwN2ItYTU3",
+"expires_in":1209600,
+"refresh_token":"MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTEyMzQ1Njc4",
+"refreshtokenexpires_in":7776000
+}
 Step 1: Build a script to parse the JSON data
+import json
+import yaml
+
+with open('myfile.json','r') as json_file:
+ourjson = json.load(json_file)
+
+print(ourjson)
+
 Step 2: Run the script to print the JSON data and then modify it to print data of interest
+devasc@labvm:~/labs/devnet-src/parsing$ python3 parsejson.py
+{'access_token': 'ZDI3MGEyYzQtNmFlNS00NDNhLWFlNzAtZGVjNjE0MGU1OGZmZWNmZDEwN2ItYTU3', 'expires_in': 1209600, 'refresh_token': 'MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTEyMzQ1Njc4', 'refreshtokenexpires_in': 7776000}
+devasc@labvm:~/labs/devnet-src/parsing$
+
+print("The access token is: {}".format(ourjson['access_token']))
+print("The token expires in {} seconds.".format(ourjson['expires_in']))
+
+devasc@labvm:~/labs/devnet-src/parsing$ python3 parsejson.py
+{'access_token': 'ZDI3MGEyYzQtNmFlNS00NDNhLWFlNzAtZGVjNjE0MGU1OGZmZWNmZDEwN2ItYTU3', 'expires_in': 1209600, 'refresh_token': 'MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTEyMzQ1Njc4', 'refreshtokenexpires_in': 7776000}
+1209600
+The access token is ZDI3MGEyYzQtNmFlNS00NDNhLWFlNzAtZGVjNjE0MGU1OGZmZWNmZDEwN2ItYTU3
+The token expires in 1209600 seconds
+devasc@labvm:~/labs/devnet-src/parsing$
+
 Step 3: Output the parsed JSON data in a YAML data format
+print("\n\n---")
+print(yaml.dump(ourjson))
+
+devasc@labvm:~/labs/devnet-src/parsing$ python3 parsejson.py
+<output from previous steps omitted>
+---
+access_token: ZDI3MGEyYzQtNmFlNS00NDNhLWFlNzAtZGVjNjE0MGU1OGZmZWNmZDEwN2ItYTU3
+expires_in: 1209600
+refresh_token: MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTEyMzQ1Njc4
+refreshtokenexpires_in: 7776000
+devasc@labvm:~/labs/devnet-src/parsing$
 
 Part 4: Parse YAML in Python
+
+access_token: ZDI3MGEyYzQtNmFlNS00NDNhLWFlNzAtZGVjNjE0MGU1OGZmZWNmZDEwN2ItYTU3
+expires_in: 1209600
+refresh_token: MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTEyMzQ1Njc4
+refreshtokenexpires_in: 7776000
+
 Step 1: Build a script to parse the YAML data
+import json
+import yaml
+
+with open('myfile.yaml','r') as yaml_file:
+ouryaml = yaml.safe_load(yaml_file)
+
+print(ouryaml)
+
 Step 2: Run the script to print the YAML data and then modify it to print data of interest
+devasc@labvm:~/labs/devnet-src/parsing$ python3 parseyaml.py
+{'access_token': 'ZDI3MGEyYzQtNmFlNS00NDNhLWFlNzAtZGVjNjE0MGU1OGZmZWNmZDEwN2ItYTU3', 'expires_in': 1209600, 'refresh_token': 'MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTEyMzQ1Njc4', 'refreshtokenexpires_in': 7776000}
+devasc@labvm:~/labs/devnet-src/parsing$
+
+print("The access token is {}".format(ouryaml['access_token']))
+print("The token expires in {} seconds.".format(ouryaml['expires_in']))
+
+devasc@labvm:~/labs/devnet-src/parsing$ python3 parseyaml.py
+{'access_token': 'ZDI3MGEyYzQtNmFlNS00NDNhLWFlNzAtZGVjNjE0MGU1OGZmZWNmZDEwN2ItYTU3', 'expires_in': 1209600, 'refresh_token': 'MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTEyMzQ1Njc4', 'refreshtokenexpires_in': 7776000}
+The access token is ZDI3MGEyYzQtNmFlNS00NDNhLWFlNzAtZGVjNjE0MGU1OGZmZWNmZDEwN2ItYTU3
+The token expires in 1209600 seconds.
+devasc@labvm:~/labs/devnet-src/parsing$
+
 Step 3: Output the parsed YAML data in a JSON data format
+print("\n\n")
+print(json.dumps(ouryaml, indent=4))
+
+devasc@labvm:~/labs/devnet-src/parsing$ python3 parseyaml.py
+<output from previous steps omitted>
+{
+"access_token": "ZDI3MGEyYzQtNmFlNS00NDNhLWFlNzAtZGVjNjE0MGU1OGZmZWNmZDEwN2ItYTU3",
+"expires_in": 1209600,
+"refresh_token": "MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTEyMzQ1Njc4",
+"refreshtokenexpires_in": 7776000
+}
+devasc@labvm:~/labs/devnet-src/parsing$
 
