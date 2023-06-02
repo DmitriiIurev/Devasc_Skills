@@ -26,6 +26,7 @@ sshCli = ConnectHandler(
 output1=sshCli.send_command("show ip interface brief")
 output2=sshCli.send_command("show version")
 print(output1 + "\n\n" + output2)
+
 - Send multiple configuration commands to a single device
 cisco_Switch = {
     "device_type": "cisco_ios",
@@ -50,8 +51,148 @@ device = {
 
 Part 2: Connect to multiple IOS devices
 - Send show commands to multiple devices
+from netmiko import ConnectHandler
+
+# Create a list of devices with their connection details
+devices = [
+    {
+        'device_type': 'cisco_ios',
+        'ip': '10.125.100.187',
+        'username': 'admin',
+        'password': 'pxl',
+    },
+    {
+        'device_type': 'cisco_ios',
+        'ip': '10.125.100.181',
+        'username': 'admin',
+        'password': 'pxl',
+    },
+    # Add more devices as needed
+]
+
+# Iterate over the devices and send show commands
+for device in devices:
+    try:
+        # Establish an SSH connection to the device
+        connection = ConnectHandler(**device)
+        print(f"Connected to {device['ip']} successfully.")
+
+        # Send show commands
+        output = connection.send_command('show version')
+        print(f"Output from {device['ip']}:")
+        print(output)
+
+        # Close the SSH connection
+        connection.disconnect()
+        print(f"Disconnected from {device['ip']}.\n")
+        
 - Send configuration commands to multiple devices
+from netmiko import ConnectHandler
+
+# Create a list of devices with their connection details
+devices = [
+    {
+        'device_type': 'cisco_ios',
+        'ip': '10.125.100.187',
+        'username': 'admin',
+        'password': 'pxl',
+    },
+    {
+        'device_type': 'cisco_ios',
+        'ip': '10.125.100.181',
+        'username': 'admin',
+        'password': 'pxl',
+    },
+    # Add more devices as needed
+]
+
+# Configuration commands to be sent to the devices
+commands = [
+    'interface GigabitEthernet0/1',
+    'description Connected to Server',
+    'no shutdown',
+    'exit',
+    'interface GigabitEthernet0/2',
+    'description Connected to Switch',
+    'no shutdown',
+    'exit',
+    # Add more commands as needed
+]
+
+# Iterate over the devices and send configuration commands
+for device in devices:
+    try:
+        # Establish an SSH connection to the device
+        connection = ConnectHandler(**device)
+        print(f"Connected to {device['ip']} successfully.")
+
+        # Send configuration commands
+        output = connection.send_config_set(commands)
+        print(f"Output from {device['ip']}:")
+        print(output)
+
+        # Save the configuration (optional)
+        connection.send_command('write memory')
+        print(f"Configuration saved on {device['ip']}.\n")
+
+        # Close the SSH connection
+        connection.disconnect()
+        print(f"Disconnected from {device['ip']}.\n")
+
+
 - Run show commands and save the output
+from netmiko import ConnectHandler
+
+# Create a list of devices with their connection details
+devices = [
+    {
+        'device_type': 'cisco_ios',
+        'ip': '10.125.100.187',
+        'username': 'admin',
+        'password': 'pxl',
+    },
+    {
+        'device_type': 'cisco_ios',
+        'ip': '10.125.100.181',
+        'username': 'admin',
+        'password': 'pxl',
+    },
+    # Add more devices as needed
+]
+
+# Show commands to be executed on the devices
+commands = [
+    'show version',
+    'show interfaces',
+    # Add more show commands as needed
+]
+
+# Iterate over the devices and execute show commands
+for device in devices:
+    try:
+        # Establish an SSH connection to the device
+        connection = ConnectHandler(**device)
+        print(f"Connected to {device['ip']} successfully.")
+
+        # Create a filename for the output based on the device IP
+        filename = f"{device['ip']}_output.txt"
+
+        # Open the file in write mode
+        with open(filename, 'w') as file:
+            # Iterate over the show commands
+            for command in commands:
+                # Execute the command and write the output to the file
+                output = connection.send_command(command)
+                file.write(f"Command: {command}\n")
+                file.write(output)
+                file.write('\n')
+
+        print(f"Output from {device['ip']} saved to {filename}.\n")
+
+        # Close the SSH connection
+        connection.disconnect()
+        print(f"Disconnected from {device['ip']}.\n")
+
 - Backup the device configurations
 from netmiko import ConnectHandler
 device = {
@@ -102,7 +243,54 @@ for interface in interfaces:
     print(f"Configuration applied to interface {interface}:\n{output}")
 # Disconnect from the device
 net_connect.disconnect()
+
 - Send device configuration using an external file
+from netmiko import ConnectHandler
+
+# Create a list of devices with their connection details
+devices = [
+    {
+        'device_type': 'cisco_ios',
+        'ip': '10.125.100.187',
+        'username': 'admin',
+        'password': 'pxl',
+    },
+    {
+        'device_type': 'cisco_ios',
+        'ip': '10.125.100.181',
+        'username': 'admin',
+        'password': 'pxl',
+    },
+    # Add more devices as needed
+]
+
+# Specify the filename for the configuration file
+config_file = 'config.txt'
+
+# Read the configuration commands from the file
+with open(config_file, 'r') as file:
+    commands = file.read().splitlines()
+
+# Iterate over the devices and send configuration commands
+for device in devices:
+    try:
+        # Establish an SSH connection to the device
+        connection = ConnectHandler(**device)
+        print(f"Connected to {device['ip']} successfully.")
+
+        # Send configuration commands
+        output = connection.send_config_set(commands)
+        print(f"Output from {device['ip']}:")
+        print(output)
+
+        # Save the configuration (optional)
+        connection.send_command('write memory')
+        print(f"Configuration saved on {device['ip']}.\n")
+
+        # Close the SSH connection
+        connection.disconnect()
+        print(f"Disconnected from {device['ip']}.\n")
+        
 - Connect using a Python Dictionary
 - Execute a script with a Function or classes
 - Execute a script with a statements (if, ifelse, else)
