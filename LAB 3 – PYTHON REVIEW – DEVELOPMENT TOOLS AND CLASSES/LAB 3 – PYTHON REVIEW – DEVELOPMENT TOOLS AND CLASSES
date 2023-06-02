@@ -354,12 +354,129 @@ Part 1: Launch the DEVASC VM
 
 Part 2: Review the Python Installation
 
+devasc@labvm:~$ python3 -V
+Python 3.8.2
+devasc@labvm:~$
+
+devasc@labvm:~$ which python3
+/usr/bin/python3
+devasc@labvm:~$
+
 Part 3: PIP and Python Virtual Environments
 Step 1: Create a Python 3 virtual environment
+
+devasc@labvm:~$ cd labs/devnet-src/python/
+devasc@labvm:~/labs/devnet-src/python$
+
+devasc@labvm:~/labs/devnet-src/python$ python3 -m venv devfun
+devasc@labvm:~/labs/devnet-src/python$
+
 Step 2: Activate and test the Python 3 virtual environment
+
+devasc@labvm:~/labs/devnet-src/python$ source devfun/bin/activate (devfun) devasc@labvm:~/labs/devnet-src/python$
+
+(devfun) devasc@labvm:~/labs/devnet-src/python$ pip3 freeze
+(devfun) devasc@labvm:~/labs/devnet-src/python$
+
+(devfun) devasc@labvm:~/labs/devnet-src/python$ pip3 install requests
+Collecting requests
+Downloading requests-2.23.0-py2.py3-none-any.whl (58 kB)
+|████████████████████████████████| 58 kB 290 kB/s
+Collecting urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1
+Downloading urllib3-1.25.9-py2.py3-none-any.whl (126 kB)
+|████████████████████████████████| 126 kB 1.7 MB/s
+Collecting idna<3,>=2.5
+Downloading idna-2.9-py2.py3-none-any.whl (58 kB)
+|████████████████████████████████| 58 kB 18.3 MB/s
+Collecting certifi>=2017.4.17
+Downloading certifi-2020.4.5.1-py2.py3-none-any.whl (157 kB)
+|████████████████████████████████| 157 kB 19.8 MB/s
+Collecting chardet<4,>=3.0.2
+Downloading chardet-3.0.4-py2.py3-none-any.whl (133 kB)
+|████████████████████████████████| 133 kB 59.2 MB/s
+Installing collected packages: urllib3, idna, certifi, chardet, requests
+Successfully installed certifi-2020.4.5.1 chardet-3.0.4 idna-2.9 requests-2.23.0 urllib3-1.25.9
+
+(devfun) devasc@labvm:~/labs/devnet-src/python$
+
+(devfun) devasc@labvm:~/labs/devnet-src/python$ pip3 freeze
+certifi==2020.4.5.1
+chardet==3.0.4
+idna==2.10
+requests==2.24.0
+urllib3==1.25.9
+(devfun) devasc@labvm:~/labs/devnet-src/python$
+
+(devfun) devasc@labvm:~/labs/devnet-src/python$ deactivate
+devasc@labvm:~/labs/devnet-src/python$
+
 Step 3: Check the current packages installed in the system environment
 
+devasc@labvm:~/labs/devnet-src/python$ python3 -m pip freeze
+ansible==2.9.4
+apache-libcloud==2.8.0
+appdirs==1.4.3
+argcomplete==1.8.1
+astroid==2.3.3
+bcrypt==3.1.7
+blinker==1.4
+certifi==2019.11.28
+<output omitted>
+xmltodict==0.12.0
+zipp==1.0.0
+devasc@labvm:~/labs/devnet-src/python$
+
+devasc@labvm:~/labs/devnet-src/python$ python3 -m pip freeze | grep requests
+requests==2.22.0
+requests-kerberos==0.12.0
+requests-ntlm==1.1.0
+requests-toolbelt==0.9.1
+requests-unixsocket==0.2.0
+devasc@labvm:~/labs/devnet-src/python$
+
 Part 4: Sharing Your Virtual Environment
+
+devasc@labvm:~/labs/devnet-src/python$ source devfun/bin/activate
+(devfun) devasc@labvm:
+
+(devfun) devasc@labvm:~/labs/devnet-src/python$ pip3 freeze > requirements.txt
+
+(devfun) devasc@labvm:~/labs/devnet-src/python$ deactivate
+devasc@labvm:~/labs/devnet-src/python$ ls devfun file-access-input.py if-acl.py requirements.txt
+devices.txt file-access.py if-vlan.py while-loop.py
+devnew hello-world.py person-info.py
+
+devasc@labvm:~/labs/devnet-src/python$ python3 -m venv devnew
+devasc@labvm:~/labs/devnet-src/python$ source devnew/bin/activate (devnew) devasc@labvm:~/labs/devnet-src/python$
+
+(devnew) devasc@labvm:~/labs/devnet-src/python$ pip3 install -r requirements.txt
+Collecting certifi==2020.4.5.1
+Using cached certifi-2020.4.5.1-py2.py3-none-any.whl (157 kB)
+Collecting chardet==3.0.4
+Using cached chardet-3.0.4-py2.py3-none-any.whl (133 kB)
+Collecting idna==2.9
+Using cached idna-2.9-py2.py3-none-any.whl (58 kB)
+Requirement already satisfied: pkg-resources==0.0.0 in ./devnew/lib/python3.8/site-packages (from -r requirements.txt (line 4)) (0.0.0)
+Collecting requests==2.23.0
+Using cached requests-2.23.0-py2.py3-none-any.whl (58 kB)
+Collecting urllib3==1.25.9
+Using cached urllib3-1.25.9-py2.py3-none-any.whl (126 kB)
+Installing collected packages: certifi, chardet, idna, urllib3, requests
+Successfully installed certifi-2020.4.5.1 chardet-3.0.4 idna-2.9 requests-2.23.0 urllib3-1.25.9
+(devnew) devasc@labvm:~/labs/devnet-src/python$
+
+(devnew) devasc@labvm:~/labs/devnet-src/python$ pip3 freeze
+certifi==2020.4.5.1
+chardet==3.0.4
+idna==2.9
+pkg-resources==0.0.0
+
+requests==2.23.0
+urllib3==1.25.9
+(devnew) devasc@labvm:~/labs/devnet-src/python$
+g. Deactivate the devnew virtual environment.
+(devnew) devasc@labvm:~/labs/devnet-src/python$ deactivate
+devasc@labvm:~/labs/devnet-src/python$
 
 Explore Python Classes
 
@@ -368,6 +485,8 @@ Part 1: Launch the DEVASC VM
 Part 2: Review Functions, Methods, and Classes
 Step 1: What is a function?
 Step 2: What is a method?
+
+
 
 Part 3: Define a Function
 
