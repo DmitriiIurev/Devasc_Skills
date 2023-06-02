@@ -1,0 +1,99 @@
+Install the CSR1000v VM
+
+Part 1: Install the CSR1000v VM
+Step 1: Instructor only: Download the CSR1000v ISO file
+Step 2: Download the CSR1000v VM OVA file
+Step 3: Install the CSR1000v VM
+Step 4: Update the installation ISO location
+Step 5: For VirtualBox on Mac and Linux, verify the CSR1000v is using a Host-Only Adapter
+Step 6: Start CSR1000v VM
+Step 7: VM Loading Process
+
+Part 2: Verify Communications to CSR1000v VM
+Step 1: Verify the CSR1000v IPv4 address
+Step 2: Launch the DEVASC VM
+Step 3: Ping the CSR1000v VM from the DEVASC VM VM
+Step 4: Establish a secure shell (SSH) session with the CSR1000v
+Step 5: From the DEVASC VM, access the CSR1000v WebUI (Web User Interface)
+Step 6: From your local computer, access the CSR1000v WebUI (Web User Interface)
+
+Explore YANG Models
+Part 1: Launch the DEVASC VM
+
+Part 2: Explore a YANG Model on GitHub
+Step 1: Explore Cisco IOS XE YANG models in the GitHub repository
+Step 2: Copy the ietf-interfaces.yang model to a folder on your VM
+
+Part 3: Explore a YANG Model Using pyang
+Step 1: Verify pyang is installed and up to date
+Step 2: Transform the ietf-interfaces.yang model
+
+Use NETCONF to Access an IOS XE Device
+Part 1: Launch the VMs and Verify Connectivity
+Step 1: Launch the VMs
+Step 2: Verify connectivity between the VMs
+Step 3: Verify SSH connectivity to the CSR1kv VM
+
+Part 2: Use a NETCONF Session to Gather Information
+Step 1: Check if NETCONF is running on the CSR1kv
+Step 2: Access the NETCONF process through an SSH terminal
+Step 3: Start a NETCONF session by sending a hello message from the client
+Step 4: Send RPC messages to an IOS XE device
+Step 5: Close the NETCONF session
+
+Part 3: Use ncclient to Connect to NETCONF
+Step 1: Verify that ncclient is installed and ready for use
+Step 2: Create a script to use ncclient to connect to the NETCONF service
+Step 3: Add a print function to the script so that the NETCONF capabilities for the CSR1kv are listed
+
+Part 4: Use ncclient to Retrieve the Configuration
+Step 1: Use the get_config() function to retrieve the running configuration for R1
+Step 2: Use Python to prettify the XML
+Step 3: Use a filter with get_config() to only retrieve a specific YANG model
+
+Part 5: Use ncclient to Configure a Device
+Step 1: Use ncclient to edit the hostname for the CSR1kv
+Step 2: Use ncclient to create a new loopback interface on R1
+Step 3: Attempt to create a new loopback interface with the same IPv4 address
+
+Part 6: Challenge: Modify the Program Used in This Lab
+
+Use RESTCONF to Access an IOS XE Device
+Part 1: Launch the VMs and Verify Connectivity
+Step 1: Launch the VMs
+Step 2: Verify connectivity between the VMs
+Step 3: Verify SSH connectivity to the CSR1kv VM
+
+Part 2: Configure an IOS XE Device for RESTCONF Access
+Step 1: Verify that the RESTCONF daemons are running
+Step 2: Enable and verify the RESTCONF service
+Step 3: Enable and verify the HTTPS service
+
+Part 3: Open and Configure Postman
+Step 1: Open Postman
+Step 2: Disable SSL certification verification
+
+Part 4: Use Postman to Send GET Requests
+Step 1: Explore the Postman user interface
+Step 2: Enter the URL for the CSR1kv
+Step 3: Enter authentication credentials
+Step 4: Set JSON as the data type to send to and receive from the CSR1kv
+Step 5: Send the API request to the CSR1kv
+Step 6: Use a GET request to gather the information for all interfaces on the CSR1kv
+Step 7: Use a GET request to gather information for a specific interface on the CSR1kv
+
+Part 5: Use Postman to Send a PUT Request
+Step 1: Duplicate and modify the last GET request
+Step 2: Configure the body of the request specifying the information for the new loopback
+
+Part 6: Use a Python script to Send GET Requests
+Step 1: Create the RESTCONF directory and start the script
+Step 2: Create the variables that will be the components of the request
+Step 3: Create a variable to send the request and store the JSON response
+Step 4: Format and display the JSON data received from the CSR1kv
+
+Part 7: Use a Python Script to Send a PUT Request
+Step 1: Import modules and disable SSL warnings
+Step 2: Create the variables that will be the components of the request
+Step 3: Create a variable to send the request and store the JSON response
+
