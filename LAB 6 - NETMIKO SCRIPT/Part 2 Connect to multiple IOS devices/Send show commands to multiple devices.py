@@ -1,6 +1,6 @@
 from netmiko import ConnectHandler
 
-# Define the device information
+# Create a list of devices with their connection details
 devices = [
     {
         'device_type': 'cisco_ios',
@@ -16,17 +16,19 @@ devices = [
     },
     # Add more devices as needed
 ]
-def send_show_commands(devices, commands):
-    for device in devices:
+
+# Iterate over the devices and send show commands
+for device in devices:
+    try:
+        # Establish an SSH connection to the device
         connection = ConnectHandler(**device)
-        print(f"\n==== Device: {device['ip']} ====")
-        for command in commands:
-            output = connection.send_command(command)
-            print(f"Command: {command}\n{output}")
+        print(f"Connected to {device['ip']} successfully.")
+
+        # Send show commands
+        output = connection.send_command('show version')
+        print(f"Output from {device['ip']}:")
+        print(output)
+
+        # Close the SSH connection
         connection.disconnect()
-
-# Define show commands
-show_commands = ['show interfaces', 'show ip route']
-
-# Execute the functions
-send_show_commands(devices, show_commands)
+        print(f"Disconnected from {device['ip']}.\n")
