@@ -411,15 +411,213 @@ Create a Python Unit Test
 Part 1: Launch the DEVASC VM
 
 Part 2: Explore Options in the unittest Framework
+devasc@labvm:~/labs/devnet-src$
+<output omitted>
+optional arguments:
+-h, --help show this help message and exit
+-v, --verbose Verbose output
+-q, --quiet Quiet output
+--locals Show local variables in tracebacks
+-f, --failfast Stop on first fail or error
+-c, --catch Catch Ctrl-C and display results so far
+-b, --buffer Buffer stdout and stderr during tests
+-k TESTNAMEPATTERNS Only run tests which match the given substring
+Examples:
+python3 -m unittest test_module - run tests from test_module
+python3 -m unittest module.TestClass - run tests from module.TestClass
+python3 -m unittest module.Class.test_method - run specified test method
+python3 -m unittest path/to/test_file.py - run tests from test_file.py
+<output omitted>
+For test discovery all test modules must be importable from the top level
+directory of the project.
+devasc@labvm:~/labs/devnet-src$
 
 Part 3: Test a Python Function with unittest
 Step 1: Review the test_data.py file
+devasc@labvm:~/labs/devnet-src$ more unittest/test_data.py
+key1 = "issueSummary"
+key2 = "XY&^$#*@!1234%^&"
+data = {
+"id": "AWcvsjx864kVeDHDi2gB",
+"instanceId": "E-NETWORK-EVENT-AWcvsjx864kVeDHDi2gB-1542693469197",
+"category": "Warn",
+"status": "NEW",
+"timestamp": 1542693469197,
+"severity": "P1",
+"domain": "Availability",
+"source": "DNAC",
+"priority": "P1",
+"type": "Network",
+"title": "Device unreachable",
+"description": "This network device leaf2.abc.inc is unreachable from controll
+er. The device role is ACCESS.",
+"actualServiceId": "10.10.20.82",
+"assignedTo": "",
+"enrichmentInfo": {
+"issueDetails": {
+"issue": [
+{
+--More--(12%)
+
 Step 2: Create the json_search() function that you will be testing
+from test_data import *
+def json_search(key,input_object):
+ret_val=[]
+if isinstance(input_object, dict): # Iterate dictionary
+for k, v in input_object.items(): # searching key in the dict
+if k == key:
+temp={k:v}
+ret_val.append(temp)
+if isinstance(v, dict): # the value is another dict so repeat
+json_search(key,v)
+elif isinstance(v, list): # it's a list
+for item in v:
+if not isinstance(item, (str,int)): # if dict or list repeat
+json_search(key,item)
+else: # Iterate a list because some APIs return JSON object in a list
+for val in input_object:
+if not isinstance(val, (str,int)):
+json_search(key,val)
+return ret_val
+print(json_search("issueSummary",data))
+
+devasc@labvm:~/labs/devnet-src/unittest$ python3 recursive_json_search.py 
+[]
+devasc@labvm:~/labs/devnet-src/unittest$
+
+<output omitted>
+"issue": [
+{
+"issueId": "AWcvsjx864kVeDHDi2gB",
+"issueSource": "Cisco DNA",
+"issueCategory": "Availability",
+"issueName": "snmp_device_down",
+"issueDescription": "This network device leaf2.abc.inc is unreachable from controller. The device role is ACCESS.",
+"issueEntity": "network_device",
+"issueEntityValue": "10.10.20.82",
+"issueSeverity": "HIGH",
+"issuePriority": "", "issueSummary": "Network Device 10.10.20.82 Is Unreachable From Controller",
+"issueTimestamp": 1542693469197,
+"suggestedActions": [
+{
+<output omitted>
+
 Step 3: Create some unit tests that will test if the function is working as intended
+import unittest
+
+from recursive_json_search import *
+from test_data import *
+
+class json_search_test(unittest.TestCase):
+'''test module to test search function in `recursive_json_search.py`'''
+def test_search_found(self):
+'''key should be found, return list should not be empty'''
+self.assertTrue([]!=json_search(key1,data))
+def test_search_not_found(self):
+'''key should not be found, should return an empty list'''
+self.assertTrue([]==json_search(key2,data))
+def test_is_a_list(self):
+'''Should return a list'''
+self.assertIsInstance(json_search(key1,data),list)
+
+if __name__ == '__main__':
+unittest.main()
+
 Step 4: Run the test to see the initial results
+[] .F.
+======================================================================
+FAIL: test_search_found (__main__.json_search_test)
+key should be found, return list should not be empty
+----------------------------------------------------------------------
+Traceback (most recent call last):
+File "test_json_search.py", line 11, in test_search_found
+self.assertTrue([]!=json_search(key1,data))
+AssertionError: False is not true
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+FAILED (failures=1)
+devasc@labvm:~/labs/devnet-src/unittest$
+
+devasc@labvm:~/labs/devnet-src/unittest$ python3 -m unittest -v test_json_search
+[]
+test_is_a_list (test_json_search.json_search_test)
+Should return a list ... ok test_search_found (test_json_search.json_search_test) key should be found, return list should not be empty ... FAIL
+test_search_not_found (test_json_search.json_search_test)
+key should not be found, should return an empty list ... ok
+======================================================================
+FAIL: test_search_found (test_json_search.json_search_test)
+key should be found, return list should not be empty
+----------------------------------------------------------------------
+Traceback (most recent call last):
+File "/home/devasc/labs/devent-src/unittest/test_json_search.py", line 11, in test_search_found
+self.assertTrue([]!=json_search(key1,data))
+AssertionError: False is not true
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+FAILED (failures=1)
+devasc@labvm:~/labs/devnet-src/unittest$
+
 Step 5: Investigate and correct the first error in the recursive_json_search.py script
+def json_search(key,input_object): ret_val=[]
+if isinstance(input_object, dict):
+for k, v in input_object.items():
+if k == key:
+temp={k:v} ret_val.append(temp)
+
+ret_val=[]
+def json_search(key,input_object):
+
+devasc@labvm:~/labs/devnet-src/unittest$ python3 recursive_json_search.py
+[{'issueSummary': 'Network Device 10.10.20.82 Is Unreachable From Controller'}]
+devasc@labvm:~/labs/devnet-src/unittest$
+
 Step 6: Run the test again to see if all errors in the script are now fixed
+devasc@labvm:~/labs/devnet-src/unittest$ python3 -m unittest test_json_search
+[{'issueSummary': 'Network Device 10.10.20.82 Is Unreachable From Controller'}] ..F
+======================================================================
+FAIL: test_search_not_found (test_json_search.json_search_test)
+key should not be found, should return an empty list
+----------------------------------------------------------------------
+Traceback (most recent call last):
+File "/home/devasc/labs/devnet-src/unittest/test_json_search.py", line 14, in test_search_not_found
+self.assertTrue([]==json_search(key2,data))
+AssertionError: False is not true
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+FAILED (failures=1)
+devasc@labvm:~/labs/devnet-src/unittest$
+
 Step 7: Investigate and correct the second error in the recursive_json_search.py script
+from test_data import * 
+def json_search(key,input_object):
+ """
+ Search a key from JSON object, get nothing back if key is not found
+ key : "keyword" to be searched, case sensitive
+ input_object : JSON object to be parsed, test_data.py in this case
+ inner_function() is actually doing the recursive search
+ return a list of key:value pair
+ """
+ ret_val=[] 
+ def inner_function(key,input_object):
+  if isinstance(input_object, dict): # Iterate dictionary
+   for k, v in input_object.items(): # searching key in the dict
+    if k == key:
+     temp={k:v}
+     ret_val.append(temp)
+    if isinstance(v, dict): # the value is another dict so repeat
+     inner_function(key,v)
+    elif isinstance(v, list):
+     for item in v:
+      if not isinstance(item, (str,int)): # if dict or list repeat
+       inner_function(key,item)
+  else: # Iterate a list because some APIs return JSON object in a list
+   for val in input_object:
+    if not isinstance(val, (str,int)):
+     inner_function(key,val)
+ inner_function(key,input_object)
+ return ret_val
+print(json_search("issueSummary",data))
+
 
 Parse Different Data Types with Python
 
