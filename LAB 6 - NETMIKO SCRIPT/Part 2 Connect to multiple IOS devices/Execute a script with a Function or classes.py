@@ -1,36 +1,31 @@
 from netmiko import ConnectHandler
 
-# Define the device information
-devices = [
-    {
+def connect_to_device(device):
+    try:
+        # Establish an SSH connection to the device
+        connection = ConnectHandler(**device)
+        print(f"Connected to {device['ip']} successfully.")
+
+        # Send commands or perform other operations
+        # ...
+
+        # Close the SSH connection
+        connection.disconnect()
+        print(f"Disconnected from {device['ip']}.\n")
+
+    except Exception as e:
+        print(f"Failed to connect to {device['ip']}. Error: {str(e)}\n")
+
+def main():
+    # Connection details as a dictionary
+    device = {
         'device_type': 'cisco_ios',
         'ip': '10.125.100.187',
         'username': 'admin',
         'password': 'pxl',
-    },
-    {
-        'device_type': 'cisco_ios',
-        'ip': '10.125.100.181',
-        'username': 'admin',
-        'password': 'pxl',
-    },
-    
-]
-# Execute a script with a function or classes
-class CiscoDevice:
-    def __init__(self, device_type, ip, username, password):
-        self.device_type = device_type
-        self.ip = ip
-        self.username = admin
-        self.password = pxl
+    }
 
-    def connect(self):
-        connection = ConnectHandler(
-            device_type=self.device_type,
-            ip=self.ip,
-            username=self.username,
-            password=self.password
-        )
-        print(f"Connected to {self.ip}")
-        # Perform desired operations on the device
-        connection.disconnect()
+    connect_to_device(device)
+
+if __name__ == '__main__':
+    main()
