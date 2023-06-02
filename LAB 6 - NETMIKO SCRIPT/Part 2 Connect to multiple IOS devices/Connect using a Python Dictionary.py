@@ -1,27 +1,21 @@
 from netmiko import ConnectHandler
 
-# Define the device information
-devices = [
-    {
-        'device_type': 'cisco_ios',
-        'ip': '10.125.100.187',
-        'username': 'admin',
-        'password': 'pxl',
-    },
-    {
-        'device_type': 'cisco_ios',
-        'ip': '10.125.100.181',
-        'username': 'admin',
-        'password': 'pxl',
-    },
-    
-]
-# Connect using a Python dictionary
-def connect_with_dictionary(device):
+# Connection details as a dictionary
+device = {
+    'device_type': 'cisco_ios',
+    'ip': '10.125.100.187',
+    'username': 'admin',
+    'password': 'pxl',
+}
+
+try:
+    # Establish an SSH connection to the device
     connection = ConnectHandler(**device)
-    print(f"Connected to {device['ip']}")
-    # Perform desired operations on the device
+    print(f"Connected to {device['ip']} successfully.")
+
+    # Send commands or perform other operations
+    # ...
+
+    # Close the SSH connection
     connection.disconnect()
-
-
-
+    print(f"Disconnected from {device['ip']}.\n")
