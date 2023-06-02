@@ -1,19 +1,92 @@
 Python Programming Review
 
-Part 1: Launch the DEVASC VM
-
 Part 2: Starting Python and VS Code
 Step 1: Start Python
+python3 -V
 Step 2: Use the Interpreter as a calculator
+>>> 2+3
+5
+>>> 10-4
+6
+>>> 2*4
+8
+>>> 20/5
+4.0
+>>> 3**2
+9
 Step 3: Use the interactive interpreter to print a string
+>>> "Hello World!"
+'Hello World!'
+>>> 'Hello World!'
+'Hello World!'
+>>> print("Hello World!")
+Hello World!
+>>> quit()
+devasc@labvm:~$
 Step 4: Open VS Code and create a script for Hello World
+devasc@labvm:~/labs/devnet-src/python$ python3 hello-world.py
+Hello World!
+devasc@labvm:~/labs/devnet-src/python$
+devasc@labvm:~$ python3 ~/labs/devnet-src/python/hello-world.py
+Hello World!
+devasc@labvm:~$
 
 Part 3: Review Data Types and Variables
 Step 1: Use the interactive interpreter to review basic data types
+devasc@labvm:~/labs/devnet-src$ python3
+Python 3.8.2 (default, Mar 13 2020, 10:14:16)
+[GCC 9.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> type(98)
+<class 'int'>
+>>> type(98.6)
+<class 'float'>
+>>> type("Hi!")
+<class 'str'>
+>>> type(True)
+<class 'bool'>
+
 Step 2: Review different Boolean operators
+>>> 1<2
+True
+>>> 1<1
+False
+>>> 1==1
+True
+>>> 1>=1
+True
+>>> 1<=1
+True
+
 Step 3: Use the interpreter to create and use a variable
+>>> x=3
+>>> x*5
+15
+>>> "Cisco"*x
+'CiscoCiscoCisco'
+
 Step 4: Use the interpreter to concatenate multiple string variables
+>>> str1="Cisco"
+>>> str2="Networking"
+>>> str3="Academy"
+>>> space=" "
+>>> print(str1+space+str2+space+str3)
+Cisco Networking Academy
+
+>>> print(str1,str2,str3)
+Cisco Networking Academy
+
 Step 5: Reviewing casting and printing different data types
+>>> x=3
+>>> print("The value of x is " + x)
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module> TypeError: can only concatenate str (not "int") to str
+>>>
+
+>>> print("The value of x is " + str(x))
+The value of x is 3
+>>> type(x)
+<class 'int'>
 
 Part 4: Review Lists and Dictionaries
 Step 1: Create and manipulate a list
