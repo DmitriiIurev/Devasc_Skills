@@ -292,5 +292,96 @@ for device in devices:
         print(f"Disconnected from {device['ip']}.\n")
         
 - Connect using a Python Dictionary
+from netmiko import ConnectHandler
+
+# Connection details as a dictionary
+device = {
+    'device_type': 'cisco_ios',
+    'ip': '10.125.100.187',
+    'username': 'admin',
+    'password': 'pxl',
+}
+
+try:
+    # Establish an SSH connection to the device
+    connection = ConnectHandler(**device)
+    print(f"Connected to {device['ip']} successfully.")
+
+    # Send commands or perform other operations
+    # ...
+
+    # Close the SSH connection
+    connection.disconnect()
+    print(f"Disconnected from {device['ip']}.\n")
+    
 - Execute a script with a Function or classes
+from netmiko import ConnectHandler
+
+def connect_to_device(device):
+    try:
+        # Establish an SSH connection to the device
+        connection = ConnectHandler(**device)
+        print(f"Connected to {device['ip']} successfully.")
+
+        # Send commands or perform other operations
+        # ...
+
+        # Close the SSH connection
+        connection.disconnect()
+        print(f"Disconnected from {device['ip']}.\n")
+
+    except Exception as e:
+        print(f"Failed to connect to {device['ip']}. Error: {str(e)}\n")
+
+def main():
+    # Connection details as a dictionary
+    device = {
+        'device_type': 'cisco_ios',
+        'ip': '10.125.100.187',
+        'username': 'admin',
+        'password': 'pxl',
+    }
+
+    connect_to_device(device)
+
+if __name__ == '__main__':
+    main()
+    
 - Execute a script with a statements (if, ifelse, else)
+from netmiko import ConnectHandler
+
+def main():
+    device = {
+        'device_type': 'cisco_ios',
+        'ip': '10.125.100.187',
+        'username': 'admin',
+        'password': 'pxl',
+    }
+
+    try:
+        connection = ConnectHandler(**device)
+        print(f"Connected to {device['ip']} successfully.")
+
+        # Send show command to retrieve interface status
+        output = connection.send_command('show interface GigabitEthernet0/1')
+        if 'GigabitEthernet0/1 is up' in output:
+            print("Interface GigabitEthernet0/1 is up and operational.")
+        else:
+            print("Interface GigabitEthernet0/1 is down or not operational.")
+
+        # Send show command to retrieve interface speed
+        output = connection.send_command('show interface GigabitEthernet0/1 | include BW')
+        speed = int(output.split()[2])
+        if speed > 1000:
+            print("Interface speed is greater than 1000 Mbps.")
+        else:
+            print("Interface speed is less than or equal to 1000 Mbps.")
+
+        connection.disconnect()
+        print(f"Disconnected from {device['ip']}.\n")
+
+    except Exception as e:
+        print(f"Failed to connect to {device['ip']}. Error: {str(e)}\n")
+
+if __name__ == '__main__':
+    main()
