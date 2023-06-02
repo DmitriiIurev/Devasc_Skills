@@ -1,6 +1,6 @@
 Part 1: Network Infrastructure
 
-Checkout netplan en configuration files van switch en router
+Checkout netplan en switch en router configuration files
 
 Install and configure your lab test environment according to the network drawing. This lab must be executed on hardware. 
 Scope definition: 
