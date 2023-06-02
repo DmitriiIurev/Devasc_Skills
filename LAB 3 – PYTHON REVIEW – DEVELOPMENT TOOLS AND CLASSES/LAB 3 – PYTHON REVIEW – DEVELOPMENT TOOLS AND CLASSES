@@ -484,17 +484,151 @@ Part 1: Launch the DEVASC VM
 
 Part 2: Review Functions, Methods, and Classes
 Step 1: What is a function?
+# Define the function
+def functionName:
+...blocks of code...
+# Call the function
+functionName()
+
 Step 2: What is a method?
-
-
+# Define the class
+class className
+# Define a method
+def method1Name
+...blocks of code
+# Define another method
+def method2Name
+...blocks of code
+# Define yet another method
+def method3Name
+...blocks of code
+# Instantiate the class
+myClass = className()
+# Call the instantiation and associated methods
+myClass.method1Name()
+myClass.method2Name()
+myClass.method3Name()
 
 Part 3: Define a Function
 
+def myCity(city):
+print("I live in " + city + ".")
+
+myCity("Austin")
+myCity("Tokyo")
+myCity("Salzburg")
+
+devasc@labvm:~/labs/devnet-src/python$ python3 myCity.py
+I live in Austin.
+I live in Tokyo.
+I live in Salzburg.
+devasc@labvm:~/labs/devnet-src/python$
+
 Part 4: Define a Class with Methods
 Step 1: Define and then instantiate a class with the __init__() method
+
+class Location:
+|<-- cursor should now be here
+
+def __init__(self, name, country):
+self.name = name
+self.country = country
+|<-- cursor should now be here
+
+loc = Location("Your_Name", "Your_Country")
+
+print(loc.name)
+print(loc.country)
+
+print(type(loc))
+
+devasc@labvm:~/labs/devnet-src/python$ python3 myLocation.py
+Your_Name
+Your_Country
+<class '__main__.Location'>
+devasc@labvm:~/labs/devnet-src/python$
+
 Step 2: Add a method to the Location class
+
+class Location:
+def __init__(self, name, country):
+self.name = name
+self.country = country
+
+self.country = country
+|<--Your cursor should be here
+
+def myLocation(self):
+print("Hi, my name is " + self.name + " and I live in " + self.country + ".")
+
 Step 3: Instantiate the Location class multiple times and call the myLocation method
+
+# First instantiation of the class Location
+loc1 = Location("Tomas", "Portugal")
+# Call a method from the instantiated class
+loc1.myLocation()
+
+devasc@labvm:~/labs/devnet-src/python$ python3 myLocation.py
+Hi, my name is Tomas and I live in Portugal.
+devasc@labvm:~/labs/devnet-src/python$
+
+loc2 = Location("Ying", "China")
+loc3 = Location("Amare", "Kenya")
+
+loc3.myLocation()
+your_loc = Location("Your_Name", "Your_Country")
+your_loc.myLocation()
+devasc@labvm:~/labs/devnet-src/python$ python3 myLocation.py
+Hi, my name is Tomas and I live in Portugal.
+Hi, my name is Ying and I live in China.
+Hi, my name is Amare and I live in Kenya.
+Hi, my name is Your_Name and I live in Your_Country.
+devasc@labvm:~/labs/devnet-src/python$
+
 Step 4: Review the complete myLocation.py script
 
+# Define a class with variables for **name** and **country**.
+# Then define a method that belongs to the class. The method’s
+# purpose is to print a sentence that uses the variables.
+class Location:
+def __init__(self, name, country):
+self.name = name
+self.country = country
+def myLocation(self):
+print("Hi, my name is " + self.name + " and I live in " + self.country + ".")
+# First instantiation of the Location class
+loc1 = Location("Tomas", "Portugal")
+# Call a method from the instantiated class
+loc1.myLocation()
+# Three more instantiations and method calls for the Location class
+loc2 = Location("Ying", "China")
+loc3 = Location("Amare", "Kenya")
+loc2.myLocation()
+loc3.myLocation()
+your_loc = Location("Your_Name", "Your_Country")
+your_loc.myLocation()
+
 Part 5: Review the circleClass.py Script
+
+# Given a radius value, print the circumference of a circle.
+# Formula for a circumference is c = pi * 2 * radius
+class Circle:
+def __init__(self, radius):
+self.radius = radius
+def circumference(self):
+pi = 3.14
+circumferenceValue = pi * self.radius * 2
+return circumferenceValue
+def printCircumference(self):
+myCircumference = self.circumference()
+print ("Circumference of a circle with a radius of " + str(self.radius) + " is " + str(myCircumference))
+# First instantiation of the Circle class.
+circle1 = Circle(2)
+# Call the printCircumference for the instantiated circle1 class.
+circle1.printCircumference()
+# Two more instantiations and method calls for the Circle class.
+circle2 = Circle(5)
+circle2.printCircumference()
+circle3 = Circle(7)
+circle3.printCircumference()
 
