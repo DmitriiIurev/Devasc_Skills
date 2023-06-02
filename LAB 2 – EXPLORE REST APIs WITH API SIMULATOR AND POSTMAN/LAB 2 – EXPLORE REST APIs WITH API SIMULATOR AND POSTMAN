@@ -1,16 +1,16 @@
 Part 1: Explore API Documentation Using the API Simulator
 • Task preparation and implementation:
-Open the Chromium Web Browser
+Step 1: Open the Chromium Web Browser
 Double-click the Chromium Web Browser icon on the desktop
-Connect to the School Library Web Site
+Step 2: Connect to the School Library Web Site
 Open the School Library website, in the address bar type: library.demo.local and press return to go there.
-Go to the API docs page
+Step 3: Go to the API docs page
 In the upper right corner where it states, Click here for API docs, click here to go to the API documentation web page.
-List books using the GET /books API
+Step 4: List books using the GET /books API
 Click anywhere on the bar for the GET /books API. This API returns a list of books in the school library.
-Use the Try it out feature in the API documentation
+Step 5: Use the Try it out feature in the API documentation
 In the GET /books API documentation, click the Try it out button.
-Use the curl command in a terminal window
+Step 6: Use the curl command in a terminal window
 Select the curl command, right-click and Copy it to your clipboard:
 cmd:curl -X GET "http://library.demo.local/api/v1/books" -H "accept: application/json"
 Open a terminal window.
