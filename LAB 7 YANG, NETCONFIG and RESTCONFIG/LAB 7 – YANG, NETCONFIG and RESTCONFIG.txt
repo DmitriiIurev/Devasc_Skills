@@ -502,34 +502,256 @@ Step 3: Verify SSH connectivity to the CSR1kv VM
 
 Part 2: Configure an IOS XE Device for RESTCONF Access
 Step 1: Verify that the RESTCONF daemons are running
+CSR1kv# show platform software yang-management process
+
 Step 2: Enable and verify the RESTCONF service
+CSR1kv#configure terminal
+CSR1kv(config)# restconf
+
+CSR1kv# show platform software yang-management process
+
 Step 3: Enable and verify the HTTPS service
+CSR1kv# configure terminal
+CSR1kv(config)# ip http secure-server
+CSR1kv(config)# ip http authentication local
+
+CSR1kv# show platform software yang-management process
 
 Part 3: Open and Configure Postman
 Step 1: Open Postman
 Step 2: Disable SSL certification verification
+Click File > Settings.
+Under the General tab, set the SSL certificate verification to OFF.
+Close the Settings dialog box.
 
 Part 4: Use Postman to Send GET Requests
 Step 1: Explore the Postman user interface
+the center, you will see the Launchpad. You can explore this area if you wish.
+Click the plus sign (+) next to the Launchpad tab to open a GET Untitled Request.
+
 Step 2: Enter the URL for the CSR1kv
+https://192.168.56.101/restconf/
+
 Step 3: Enter authentication credentials
+Click the Authorization tab.
+Under Type, click the down arrow next to “Inherit auth from parent” and choose Basic Auth.
+For Username and Password, enter the local authentication credentials for the CSR1kv:
+Username: cisco
+Password: cisco123!
+Click Headers. Then click the 7 hidden. 
+
 Step 4: Set JSON as the data type to send to and receive from the CSR1kv
+In the Headers area, click in the first blank Key field and type Content-Type for the type of key. In the Value field, type application/yang-data+json. This tells Postman to send JSON data to the CSR1kv.
+Below your Content-Type key, add another key/value pair. The Key field is Accept and the Value field is application/yang-data+json.
+
 Step 5: Send the API request to the CSR1kv
+{
+"ietf-restconf:restconf": {
+"data": {},
+"operations": {},
+"yang-library-version": "2016-06-21"
+}
+}
+
 Step 6: Use a GET request to gather the information for all interfaces on the CSR1kv
+https://192.168.56.101/restconf/data/ietf-interfaces:interfaces
+
+"ietf-interfaces:interfaces": {
+"interface": [
+{
+"name": "GigabitEthernet1",
+"description": "VBox",
+"type": "iana-if-type:ethernetCsmacd",
+"enabled": true,
+"ietf-ip:ipv4": {},
+"ietf-ip:ipv6": {}
+}
+]
+}
+}
+
 Step 7: Use a GET request to gather information for a specific interface on the CSR1kv
+https://192.168.56.101/restconf/data/ietf-interfaces:interfaces/interface=GigabitEthernet1
+
+{
+"ietf-interfaces:interface": {
+"name": "GigabitEthernet1",
+"description": "VBox",
+"type": "iana-if-type:ethernetCsmacd",
+"enabled": true, "ietf-ip:ipv4": {},
+"ietf-ip:ipv6": {}
+}
+}
+
+CSR1kv# show ip interface brief
+Interface IP-Address OK? Method Status Protocol GigabitEthernet1 192.168.56.101 YES DHCP up up
+CSR1kv#
+
+CSR1kv# conf t
+CSR1kv(config)# interface g1
+CSR1kv(config-if)# ip address 192.168.56.101 255.255.255.0
+CSR1kv(config-if)# end
+CSR1kv# show ip interface brief
+Interface IP-Address OK? Method Status Protocol GigabitEthernet1 192.168.56.101 YES manual up up
+CSR1kv#
+
+{
+"ietf-interfaces:interface": {
+"name": "GigabitEthernet1",
+"description": "VBox",
+"type": "iana-if-type:ethernetCsmacd",
+"enabled": true, "ietf-ip:ipv4": {
+"address": [
+{ "ip": "192.168.56.101", "netmask": "255.255.255.0"
+}
+]
+},
+"ietf-ip:ipv6": {}
+}
+}
 
 Part 5: Use Postman to Send a PUT Request
 Step 1: Duplicate and modify the last GET request
+https://192.168.56.101/restconf/data/ietf-interfaces:interfaces/interface=Loopback1
+
+
 Step 2: Configure the body of the request specifying the information for the new loopback
+{
+"ietf-interfaces:interface": { "name": "Loopback1", "description": "My first RESTCONF loopback", "type": "iana-if-type:softwareLoopback",
+"enabled": true,
+"ietf-ip:ipv4": {
+"address": [
+{ "ip": "10.1.1.1",
+"netmask": "255.255.255.0"
+}
+]
+},
+"ietf-ip:ipv6": {}
+}
+}
+
+CSR1kv# show ip interface brief
+Interface IP-Address OK? Method Status Protocol
+GigabitEthernet1 192.168.56.101 YES manual up up Loopback1 10.1.1.1 YES other up up
+CSR1kv#
 
 Part 6: Use a Python script to Send GET Requests
 Step 1: Create the RESTCONF directory and start the script
+devasc@labvm:~/labs/devnet-src$ mkdir restconf
+devasc@labvm:~/labs/devnet-src$
+
+import json
+import requests
+requests.packages.urllib3.disable_warnings()
+
+
 Step 2: Create the variables that will be the components of the request
+api_url = "https://192.168.56.101/restconf/data/ietf-interfaces:interfaces"
+
+headers = { "Accept": "application/yang-data+json",
+"Content-type":"application/yang-data+json"
+
+basicauth = ("cisco", "cisco123!")
+
 Step 3: Create a variable to send the request and store the JSON response
+resp = requests.get(api_url, auth=basicauth, headers=headers, verify=False)
+
+print(resp)
+
+devasc@labvm:~/labs/devnet-src$ cd restconf/ devasc@labvm:~/labs/devnet-src/restconf$ python3 restconf-get.py 
+<Response [200]> 
+devasc@labvm:~/labs/devnet-src/restconf$
+
 Step 4: Format and display the JSON data received from the CSR1kv
+response_json = resp.json()
+
+print(response_json)
+
+devasc@labvm:~/labs/devnet-src/restconf$ python3 restconf-get.py
+<Response [200]>
+{'ietf-interfaces:interfaces': {'interface': [{'name': 'GigabitEthernet1', 'description': 'VBox', 'type': 'iana-if-type:ethernetCsmacd', 'enabled': True, 'ietf-ip:ipv4': {'address': [{'ip': '192.168.56.101', 'netmask': '255.255.255.0'}]}, 'ietf-ip:ipv6': {}}, {'name': 'Loopback1', 'description': 'My first RESTCONF loopback', 'type': 'iana-if-type:softwareLoopback', 'enabled': True, 'ietf-ip:ipv4': {'address': [{'ip': '10.1.1.1', 'netmask': '255.255.255.0'}]}, 'ietf-ip:ipv6': {}}]}}
+devasc@labvm:~/labs/devnet-src/restconf$
+
+print(json.dumps(response_json, indent=4))
+
+devasc@labvm:~/labs/devnet-src/restconf$ python3 restconf-get.py
+<Response [200]>
+{
+"ietf-interfaces:interfaces": {
+"interface": [
+{
+"name": "GigabitEthernet1",
+"description": "VBox",
+"type": "iana-if-type:ethernetCsmacd",
+"enabled": true,
+"ietf-ip:ipv4": {
+"address": [
+{
+"ip": "192.168.56.101",
+"netmask": "255.255.255.0"
+}
+]
+},
+"ietf-ip:ipv6": {}
+},
+{
+"name": "Loopback1",
+"description": "My first RESTCONF loopback",
+"type": "iana-if-type:softwareLoopback",
+"enabled": true,
+"ietf-ip:ipv4": {
+"address": [
+{
+"ip": "10.1.1.1",
+"netmask": "255.255.255.0"
+}
+]
+},
+"ietf-ip:ipv6": {}
+}
+]
+}
+}
+devasc@labvm:~/labs/devnet-src/restconf$
 
 Part 7: Use a Python Script to Send a PUT Request
 Step 1: Import modules and disable SSL warnings
+import json
+import requests
+requests.packages.urllib3.disable_warnings()
+
+
+
 Step 2: Create the variables that will be the components of the request
+api_url = "https://192.168.56.101/restconf/data/ietf-interfaces:interfaces/interface=Loopback2"
+
+headers = { "Accept": "application/yang-data+json",
+"Content-type":"application/yang-data+json"
+
+basicauth = ("cisco", "cisco123!")
+
+yangConfig = {
+"ietf-interfaces:interface": { "name": "Loopback2",
+"description": "My second RESTCONF loopback",
+"type": "iana-if-type:softwareLoopback", "enabled": True,
+"ietf-ip:ipv4": {
+"address": [
+{ "ip": "10.2.1.1",
+"netmask": "255.255.255.0"
+}
+]
+},
+"ietf-ip:ipv6": {}
+}
+}
+
 Step 3: Create a variable to send the request and store the JSON response
+resp = requests.put(api_url, data=json.dumps(yangConfig), auth=basicauth, headers=headers, verify=False)
+
+if(resp.status_code >= 200 and resp.status_code <= 299):
+print("STATUS OK: {}".format(resp.status_code))
+else:
+print('Error. Status Code: {} \nError message: {}'.format(resp.status_code,resp.json()))
+
+CSR1kv# show ip interface brief
 
