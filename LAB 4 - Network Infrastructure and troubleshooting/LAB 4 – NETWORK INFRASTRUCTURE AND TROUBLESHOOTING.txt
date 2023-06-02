@@ -305,10 +305,41 @@ lab-ra08-a-sw03-confg
 
 Part 2: Network Troubleshooting 
 Document your findings and important commands.
- LAB-RA08-C-R03:
-  tftp source-interface GigabitEthernet0/0.10: is used on Cisco network devices to specify the source interface to be used for TFTP file transfer (Trivial File Transfer Protocol).
-  encapsulation dot1Q 10: is used to configure a subinterface on a Cisco network device with IEEE 802.1Q VLAN encapsulation and associate it with VLAN 10. It is typically used on a router or switch to enable communication between VLANs through a trunk link.
-  standby 10 ip 172.16.8.1: is used to configure a virtual IP address for a Cisco HSRP (Hot Standby Router Protocol) group 10. 
-  router-id 10.199.66.108: is used in the configuration of the OSPF routing protocol on Cisco network devices to manually specify the OSPF router ID.
-  network 10.199.66.96 0.0.0.31 area 0: is used in the configuration of the OSPF routing protocol on Cisco network devices to advertise the networks to be included in the OSPF routing process.
+
+LAB-RA08-A-SW03
+ip ssh version 2: is een opdracht die wordt gebruikt in Cisco IOS-netwerkapparaten om SSH versie 2 in te schakelen voor beheer op afstand. SSH-versie 2 is de veiligere en bijgewerkte versie van SSH en biedt verbeterde beveiligingsfuncties en betere coderingsalgoritmen dan SSH versie 1.
+ip ssh time-out 60: is een configuratieopdracht die de time-outwaarde voor inactiviteit voor Secure Shell-sessies (SSH) op een netwerkapparaat instelt op 60 minuten. Door de time-outwaarde voor inactiviteit in te stellen op 60 minuten, beëindigt het apparaat alle SSH-sessies die 60 minuten inactief zijn geweest, waardoor de veiligheid van het netwerk wordt gewaarborgd.
+no ip domain-lookup: is een configuratieopdracht die wordt gebruikt op Cisco-netwerkapparaten om de DNS-naam omzettingsfunctie uit te schakelen. Het uitschakelen van DNS-naamomzetting kan ook de beveiliging van het apparaat verbeteren door te voorkomen dat mogelijk gevoelige informatie, zoals gebruikersnamen en wachtwoorden, naar externe DNS-servers lekt.
+ip-domein-name: is een configuratieopdracht die wordt gebruikt op Cisco-netwerkapparaten om de domeinnaam op te geven die wordt toegevoegd aan een niet-gekwalificeerde hostnaam op het apparaat. Dit kan handig zijn bij het vereenvoudigen van de configuratie van netwerkapparaten door beheerders toe te staan kortere hostnamen te gebruiken bij het configureren van apparaten.
+crypto key generate rsa general-keys modulus 1024: wordt gebruikt op Cisco-netwerkapparaten om een RSA-sleutelpaar te genereren voor veilige gecodeerde communicatie. Het sleutelwoord "general-keys" geeft aan dat het sleutelpaar voor algemene doeleinden zal worden gebruikt, zoals voor SSH-authenticatie. De parameter "modulus 1024" specificeert de lengte van de sleutel in bits. In dit geval wordt een sleutel met een lengte van 1024 bits gegenereerd. Hoe langer de sleutellengte, hoe veiliger de gecodeerde communicatie zal zijn, maar ook hoe rekenintensiever het zal zijn voor het apparaat om het sleutelpaar te genereren en te gebruiken.
+username admin password pxl: om in te loggen
+enable secret: wordt gebruikt op Cisco-netwerkapparaten om een wachtwoord in te stellen voor de geprivilegieerde EXEC-modus, die toegang biedt tot geavanceerde configuratie- en beheeropdrachten op het apparaat.
+line console 0: wordt gebruikt op Cisco-netwerkapparaten om de instellingen voor de consolepoort te configureren. De consolepoort is een fysieke seriële poort op het apparaat die een lokale beheerinterface biedt voor het configureren en oplossen van problemen met het apparaat.
+password pxl: voor veiligheid
+service password encryption: wordt gebruikt op Cisco-netwerkapparaten om wachtwoorden in platte tekst te coderen in de apparaatconfiguratie. Wanneer deze opdracht is ingeschakeld, worden alle wachtwoorden die in de configuratie worden ingevoerd, zoals console- of activeringswachtwoorden, automatisch gecodeerd en weergegeven in een gecodeerde indeling.
+spanning-tree mode pvst: wordt gebruikt op Cisco-netwerkswitches om de Spanning Tree Protocol (STP)-modus te configureren als PVST+ (Per-VLAN Spanning Tree Plus). Wanneer spanning-tree mode pvst wordt gebruikt, is de switch geconfigureerd om PVST+ uit te voeren als de STP-modus. Dit betekent dat de switch PVST+ zal gebruiken om de STP-topologie voor alle VLAN's op de switch te beheren.
+switchport mode access: wordt gebruikt om een switchpoort als toegangspoort te configureren. In een geschakeld netwerk worden toegangspoorten gebruikt om eindapparaten, zoals computers, servers en printers, op het netwerk aan te sluiten. Toegangspoorten vervoeren alleen verkeer voor een enkele VLAN en taggen geen VLAN-informatie in de frames die op de poort worden verzonden en ontvangen.
+switchport access vlan 10: wordt gebruikt om een switchpoort als toegangspoort te configureren en toe te wijzen aan VLAN 10. 
+line vty 0 4: wordt gebruikt op Cisco-netwerkapparaten om de instellingen te configureren voor virtuele terminallijnen, die worden gebruikt voor externe toegang tot het apparaat met behulp van protocollen zoals Telnet of SSH.
+login local: wordt gebruikt op Cisco-netwerkapparaten om de aanmeldingsverificatiemethode te configureren voor lokale gebruikers die toegang krijgen tot het apparaat via de console of virtuele terminallijnen. Controleert het apparaat de lokale database met gebruikersnaam en wachtwoord om gebruikers te verifiëren voordat ze toegang tot het apparaat krijgen.
+transport input ssh: wordt gebruikt op Cisco-netwerkapparaten om SSH in te schakelen als transportprotocol voor externe toegang tot het apparaat via de console of virtuele terminallijnen. Wanneer deze opdracht is ingeschakeld, kunnen gebruikers verbinding maken met het apparaat via een SSH-client, wat een veiligere methode voor externe toegang biedt in vergelijking met Telnet.
+switchport mode trunk: wordt gebruikt op Cisco-netwerkapparaten om een switchpoort te configureren voor gebruik in trunk-modus. Een trunk-poort wordt gebruikt om verkeer voor meerdere VLAN's tussen switches te transporteren.
+switchport trunk allowed vlan 10,40: wordt gebruikt op Cisco-netwerkapparaten om de lijst met VLAN's te configureren die via een trunkpoort mogen worden vervoerd. Deze opdracht beperkt de VLAN's die over de trunklink mogen worden getransporteerd en kan helpen de beveiliging te verbeteren door ongeoorloofde VLAN-toegang te voorkomen.
+
+LAB-RA08-C-R03:
+encapsulation dot1Q 10: is used to configure a subinterface on a Cisco network device with IEEE 802.1Q VLAN encapsulation and associate it with VLAN 10. It is typically used on a router or switch to enable communication between VLANs through a trunk link.
+standby 10 ip 172.16.8.1: is used to configure a virtual IP address for a Cisco HSRP (Hot Standby Router Protocol) group 10. 
+router-id 10.199.66.108: is used in the configuration of the OSPF routing protocol on Cisco network devices to manually specify the OSPF router ID.
+network 10.199.66.96 0.0.0.31 area 0: is used in the configuration of the OSPF routing protocol on Cisco network devices to advertise the networks to be included in the OSPF routing process.
+tftp source-interface GigabitEthernet0/0.10: wordt gebruikt op Cisco-netwerkapparaten om de broninterface op te geven die moet worden gebruikt voor TFTP-bestandsoverdracht (Trivial File Transfer Protocol). Het TFTP-protocol wordt vaak gebruikt om configuratiebestanden, firmware-updates en andere bestanden tussen netwerkapparaten uit te wisselen.
+interface GigabitEthernet0/0.10: wordt gebruikt in Cisco IOS om de interfaceconfiguratiemodus voor een specifieke subinterface te openen. In dit geval is de subinterface gekoppeld aan VLAN 10 en geconfigureerd op de GigabitEthernet0/0-interface.
+encapsulation dot1Q 10: wordt gebruikt om een subinterface op een Cisco-netwerkapparaat met IEEE 802.1Q VLAN-inkapseling te configureren en te associëren met VLAN 10. Wordt meestal gebruikt op een router of switch om communicatie tussen VLAN's via een trunklink mogelijk te maken. Door voor elke VLAN een subinterface op de router of switch te configureren, kan verkeer tussen VLAN's door de router of switch worden gerouteerd.
+standby 10 ip 172.16.8.1: wordt gebruikt om een virtueel IP-adres te configureren voor een Cisco HSRP (Hot Standby Router Protocol) groep 10. HSRP is een eigen protocol van Cisco dat redundantie biedt voor IP-netwerken door twee of meer routers samen te laten werken om het uiterlijk van een enkele virtuele router te presenteren aan de hosts op een LAN.
+ip ospf 10 area 0: wordt gebruikt om het OSPF-protocol (Open Shortest Path First) op een interface in te schakelen en te configureren om te werken in OSPF-gebied 0. OSPF is een routeringsprotocol dat wordt gebruikt om routeringsinformatie uit te wisselen tussen routers in een IP-netwerk.
+router-id 10.199.66.108: wordt gebruikt in de configuratie van het OSPF-routeringsprotocol (Open Shortest Path First) op Cisco-netwerkapparaten om handmatig de OSPF-router-ID op te geven. De OSPF-router-ID is een unieke identificatie voor de router binnen het OSPF-domein en wordt gebruikt om de router te identificeren in OSPF-advertenties en routeringstabellen.
+network 10.199.66.96 0.0.0.31 area 0: wordt gebruikt in de configuratie van het OSPF-routeringsprotocol (Open Shortest Path First) op Cisco-netwerkapparaten om de netwerken aan te kondigen die moeten worden opgenomen in het OSPF-routeringsproces.
+
+
+
+
   
