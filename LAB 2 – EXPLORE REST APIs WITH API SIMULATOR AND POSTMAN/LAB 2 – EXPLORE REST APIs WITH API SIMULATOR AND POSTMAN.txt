@@ -1,0 +1,194 @@
+Part 1: Explore API Documentation Using the API Simulator
+• Task preparation and implementation:
+Step 1: Open the Chromium Web Browser
+Double-click the Chromium Web Browser icon on the desktop
+Step 2: Connect to the School Library Web Site
+Open the School Library website, in the address bar type: library.demo.local and press return to go there.
+Step 3: Go to the API docs page
+In the upper right corner where it states, Click here for API docs, click here to go to the API documentation web page.
+Step 4: List books using the GET /books API
+Click anywhere on the bar for the GET /books API. This API returns a list of books in the school library.
+Step 5: Use the Try it out feature in the API documentation
+In the GET /books API documentation, click the Try it out button.
+Step 6: Use the curl command in a terminal window
+Select the curl command, right-click and Copy it to your clipboard:
+cmd:curl -X GET "http://library.demo.local/api/v1/books" -H "accept: application/json"
+Open a terminal window. Right-click and Paste the contents from the clipboard into the terminal and press Enter.
+devasc@labvm:~$ curl -X GET "http://library.demo.local/api/v1/books" -H "accept: application/json"
+Step 7: List books with their ISBN using the GET /books API
+Return to the School Library API web site's GET /books API.
+In the Parameters section, select the down arrow next to the includeISBN parameter and select true.
+Click Execute.
+Step 8: Get a token using the POST /loginViaBasic API
+Click the API POST /loginViaBasic.
+Click Try it out, and then click Execute.
+Enter the following information and click Sign in:
+• Username: cisco
+• Password: Cisco123!
+Select the information between the quotes, right-click and Copy the information into your clipboard.
+{ "token": "cisco|KZZzteQbC5iV3HKEzB7hCJ6qHQXen4rLGh72YJKeVfs"}
+Scroll up to the top of the School Library API page and click the green Authorize button. 
+Right-click and Paste the token after Value and click Authorize. Notice the Name is X-API-KEY. 
+Close the Available authorizations dialogue box and return to the list of APIs.
+Click the bar for the API POST /loginViaBasic to close the window.
+Step 9: Add books using the POST /books API
+Click the API POST /books.
+Click Try it out.
+{ "id": 4, "title": "IPv6 Fundamentals", "author": "Rick Graziani"}
+Click Execute.
+To add another book, modify the id, title and author with the information shown below.
+{ "id": 5, "title": "31 Days Before Your CCNA Exam", "author": "Allan Johnson"}
+Click Execute.
+Click the bar for the API POST /books to close the window.
+Step 10: List books using the GET /books API
+Click the GET /books API.
+Click Try it out.
+Click Execute.
+Click the bar for the GET /books API to close the window.
+Step 11: List a specific book using the GET /books{id} API
+Click the GET /books{id} API.
+Click the Try it out button.
+Under Parameters, enter 4 for the required id.
+Click Execute.
+{ "id": 4,
+"title": "IPv6 Fundamentals",
+"author": "Rick Graziani"
+}
+Click the bar for the GET /books{id} API to close the window.
+Step 12: Delete a specific book using the DELETE /books{id} API
+Click the DELETE /books{id} API. 
+Click Try it out.
+Under Parameters, enter 4.
+Click Execute.
+{ "id": 4,
+"title": "IPv6 Fundamentals",
+"author": "Rick Graziani"
+}
+Click the bar for the DELETE /books{id} API to close the window.
+Step 13: List books using the GET /books API
+Click the GET /books API.
+Click Try it out. 
+Click Execute.
+
+• Task troubleshooting:
+• Task verification:
+
+Part 2: Use Postman to Make API Calls to the API Simulator
+• Task preparation and implementation:
+Step 1: Open Postman
+Double-click the Postman icon on the desktop.
+Step 2: List the books using the GET /books API
+In the main window next to the Launchpad tab, click the plus icon "+" to create an Untitled Request.
+Click the down arrow next to GET to view the different API operations including GET, POST, and DELETE.
+Enter request URL.
+Under Request URL, select, right-click and Copy the URL to your clipboard: http://library.demo.local/api/v1/books
+Return to Postman and paste the URL next to GET where it states, "Enter request URL".
+Click Send.
+Step 3: Get a Token using the POST /loginViaBasic API
+In the main window, click the plus icon "+" to create a new Untitled Request.
+Click the down arrow next to GET and select POST.
+Enter request URL.
+Under Request URL, select, right-click and Copy the URL to your clipboard: http://library.demo.local/api/v1/loginViaBasic
+Click Try it out, then Execute, and then re-authenticate with username cisco and password Cisco123!.
+Return to Postman and paste the URL next to POST where it states, "Enter request URL".
+Click Authorization. 
+In the drop-down list for Type, choose Basic Auth.
+For the Username and Password fields, fill in the following:
+• Username: cisco
+• Password: Cisco123!
+Click Send.
+Step 4: Add a book using the POST /books API
+In the main window, click the plus icon "+" to create an Untitled Request.
+Click the down arrow next to GET and select POST.
+Enter request URL.
+Return to the School Library API tab in Chromium and expand the POST /books API.
+Under Request URL, select, right-click and Copy the URL to your clipboard: http://library.demo.local/api/v1/books
+Return to Postman and paste the URL next to POST where it states, "Enter request URL".
+Click Authorization.
+In the drop-down list for Type, choose API Key.
+In the Key field, enter X-API-KEY.
+Return to the Post tab in Postman and copy the token you received in Step 3.
+Your token will be different than the one shown here. 
+Example: cisco|5xSUHYFDvIAoCRv0LqWVSDcjJAwWjg18vMml6u2lm1I
+Go back to the second Post tab in Postman. 
+Paste the token in the Value field.
+In the same row with the Authorization tab, click Body. 
+Click the raw radio button.
+Click Text and change this option to JSON.
+In the input area you will see the number 1, for "line 1". Enter the following JSON object.
+Click Send.
+Step 5: Verify the additional book with the Get /books API
+Return to the first GET tab.
+Click Send.
+To verify that the API request was a success, you will now see a response that include the Status code 200 OK in green.
+Click Body to see the response.
+Step 6: Use additional parameters with the Get /books API
+Go to the School Library API web site.
+Notice the parameters that are available:
+o includeISBN: Includes in the results the ISBN numbers. Default=false
+o sortBy: Sort results using the specified parameter. Default=id
+o author: Return only books by the given Author.
+o page: Used to specify a page number.
+b. Click Try it out. 
+Under parameters:
+Click includeISBN and select true
+Click sortBy and select author
+Click Execute.
+Return to Postman and go to the first API tab, GET http://library.demo.local/api/v1/books. 
+Click Params. 
+Under KEY, enter includeISBN and under Value enter true
+Under KEY, enter sortBy and under Value enter author
+Click Send.
+
+• Task troubleshooting:
+• Task verification:
+
+Part 3: Use Python to Add 100 Books to the API Simulator
+• Task preparation and implementation:
+Step 1: Open Visual Studio (VS) Code and navigate to the school-library directory
+Click File > Open Folder..., navigate to the labs/devnet-src/school-library folder, and click OK
+Step 2: Investigate the libraries used by add100RandomBooks.py program
+devasc@labvm:~/labs/devnet-src/school-library$ python3
+Python 3.8.2 (default, Apr 27 2020, 15:53:34)
+[GCC 9.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from faker import Faker
+>>> fake = Faker() >>> fake.<press Tab key twice – be sure you include the period>
+Step 3: Practice generating random data using the faker library
+>>> print('My name is {}.'.format(fake.name()))
+My name is Katherine Ross.
+>>>
+Using the three highlighted messages in Step 2d above, enter the command that would print the following fake output.
+My name is Gary Castaneda and I wrote "Organic incremental neural-net" (ISBN 978-0-669-01935-3).
+>>>
+Enter the following to generate 10 random names. After the "…" you will need to press return a second time.
+>>> for i in range(10):
+... print(fake.name())
+...
+Kevin Moyer
+Mr. Christopher Green MD
+Spencer Jensen
+Whitney Guzman
+Nicole Scott
+Tammy Lewis
+Craig Edwards
+Michael Diaz
+Ryan Mccoy
+Terry Rocha
+>>>
+Quit the Python interpreter when done investigating the faker library.
+>>> quit()
+devasc@labvm:~/labs/devnet-src/school-library$
+Step 4: Review the function variables
+sudo nano add100RandomBooks.py
+The two functions in the program use three variables to get an authorization token from the School Library API service.
+Step 5: Review the getAuthToken function
+paste commands
+Step 6: Review the addBook function
+paste commands
+Step 7: Review the code that invokes the two functions
+python3 add100RandomBooks.py
+Step 8: Run and verify the add100RandomBooks.py program
+
+• Task troubleshooting:
+• Task verification:
