@@ -632,3 +632,5 @@ circle2.printCircumference()
 circle3 = Circle(7)
 circle3.printCircumference()
 
+• Task verification:
+Checkout screenshots
