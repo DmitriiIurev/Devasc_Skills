@@ -755,3 +755,5 @@ print('Error. Status Code: {} \nError message: {}'.format(resp.status_code,resp.
 
 CSR1kv# show ip interface brief
 
+• Task verification:
+Checkout screenshots
