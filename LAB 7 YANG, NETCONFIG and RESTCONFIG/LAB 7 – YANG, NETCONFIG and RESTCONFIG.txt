@@ -128,27 +128,371 @@ Step 3: Verify SSH connectivity to the CSR1kv VM
 
 Part 2: Use a NETCONF Session to Gather Information
 Step 1: Check if NETCONF is running on the CSR1kv
+CSR1kv# show platform software yang-management process
+confd : Running
+nesd : Running
+syncfd : Running ncsshd : Running
+dmiauthd : Running
+nginx : Running
+ndbmand : Running
+pubd : Running
+CSR1kv#
+
+CSR1kv# config t
+CSR1kv (config)# netconf-yang
+
 Step 2: Access the NETCONF process through an SSH terminal
+devasc@labvm:~$ ssh cisco@192.168.56.101 -p 830 -s netconf
+cisco@192.168.56.101's password:
+
+<?xml version="1.0" encoding="UTF-8"?> <hello xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+<capabilities>
+<capability>urn:ietf:params:netconf:base:1.0</capability>
+<capability>urn:ietf:params:netconf:base:1.1</capability>
+<capability>urn:ietf:params:netconf:capability:writable-running:1.0</capability>
+<capability>urn:ietf:params:netconf:capability:xpath:1.0</capability>
+<capability>urn:ietf:params:netconf:capability:validate:1.0</capability>
+<capability>urn:ietf:params:netconf:capability:validate:1.1</capability>
+(output omitted)
+</capability>
+</capabilities> <session-id>20</session-id></hello>]]>]]>
+
 Step 3: Start a NETCONF session by sending a hello message from the client
+<hello xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+<capabilities>
+<capability>urn:ietf:params:netconf:base:1.0</capability>
+</capabilities>
+</hello> ]]>]]>
+
+CSR1kv> en
+CSRk1v# show netconf-yang sessions
+R: Global-lock on running datastore
+C: Global-lock on candidate datastore
+S: Global-lock on startup datastore
+Number of sessions : 1
+session-id transport username source-host global-lock
+------------------------------------------------------------------------------- 20 netconf-ssh cisco 192.168.56.1 None
+
 Step 4: Send RPC messages to an IOS XE device
+<rpc message-id="103" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"> <get>
+<filter>
+<interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces"/>
+</filter>
+</get>
+</rpc>
+]]>]]>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="103"><data><interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-
+interfaces"><interface><name>GigabitEthernet1</name><description>VBox</description><type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type><enabled>true</enabled><ipv4 xmlns="urn:ietf:params:xml:ns:yang:ietf-ip"></ipv4><ipv6 xmlns="urn:ietf:params:xml:ns:yang:ietf-ip"></ipv6></interface></interfaces></data></rpc-reply>]]>]]>
+
+<rpc-reply xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="103">
+<data>
+<interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+<interface>
+<name>GigabitEthernet1</name>
+<description>VBox</description>
+<type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+<enabled>true</enabled>
+<ipv4 xmlns="urn:ietf:params:xml:ns:yang:ietf-ip"/>
+<ipv6 xmlns="urn:ietf:params:xml:ns:yang:ietf-ip"/>
+</interface>
+</interfaces>
+</data>
+</rpc-reply>
+
+CSR1kv# show netconf-yang sessions
+There are no active sessions
+CSR1kv#
+
 Step 5: Close the NETCONF session
+<rpc message-id="9999999" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+<close-session />
+</rpc>
 
 Part 3: Use ncclient to Connect to NETCONF
 Step 1: Verify that ncclient is installed and ready for use
+devasc@labvm:~$ pip3 list --format=columns | more
+Package Version
+---------------------- -----------
+ansible 2.9.6
+apache-libcloud 2.8.0
+appdirs 1.4.3
+argcomplete 1.8.1
+astroid 2.3.3
+(output omitted) ncclient 0.6.7
+netaddr 0.7.19
+netifaces 0.10.4
+netmiko 3.1.0
+ntlm-auth 1.1.0
+oauthlib 3.1.0
+(output omitted)
+xmltodict 0.12.0
+zipp 1.0.0
+devasc@labvm:~$
+
 Step 2: Create a script to use ncclient to connect to the NETCONF service
+devasc@labvm:~/labs/devnet-src$ mkdir netconf
+devasc@labvm:~/labs/devnet-src$
+
+from ncclient import manager
+m = manager.connect(
+host="192.168.56.101",
+port=830,
+username="cisco",
+password="cisco123!",
+Lab - Use NETCONF to Access an IOS XE Device
+© 2020 - 2020 Cisco and/or its affiliates. All rights reserved. Cisco Public Page 7 of 16 www.netacad.com
+hostkey_verify=False
+)
+
+devasc@labvm:~/labs/devnet-src$ cd netconf/
+devasc@labvm:~/labs/devnet-src/netconf$ python3 ncclient-netconf.py
+devasc@labvm:~/labs/devnet-src/netconf$
+
 Step 3: Add a print function to the script so that the NETCONF capabilities for the CSR1kv are listed
+print("#Supported Capabilities (YANG models):")
+for capability in m.server_capabilities:
+print(capability)
+
+devasc@labvm:~/labs/devnet-src/netconf$ python3 ncclient-netconf.py
+#Supported Capabilities (YANG models):
+urn:ietf:params:netconf:base:1.0
+urn:ietf:params:netconf:base:1.1
+urn:ietf:params:netconf:capability:writable-running:1.0
+urn:ietf:params:netconf:capability:xpath:1.0
+<output omitted>
+urn:ietf:params:xml:ns:netconf:base:1.0?module=ietf-netconf&revision=2011-06-01
+urn:ietf:params:xml:ns:yang:ietf-netconf-with-defaults?module=ietf-netconf-with-defaults&revision=2011-06-01
+urn:ietf:params:netconf:capability:notification:1.1
+devasc@labvm:~/labs/devnet-src/netconf$
 
 Part 4: Use ncclient to Retrieve the Configuration
 Step 1: Use the get_config() function to retrieve the running configuration for R1
+'''
+print("#Supported Capabilities (YANG models):")
+for capability in m.server_capabilities:
+print(capability) '''
+
+netconf_reply = m.get_config(source="running")
+print(netconf_reply)
+
+devasc@labvm:~/labs/devnet-src/netconf$ python3 ncclient-netconf.py
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:3f31bedc-5671-47ca-9781-4d3d7aadae24" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"><data><native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"><version>16.9</version><boot-start-marker/><boot-end-marker/><banner><motd><banner>
+(output omitted)
+devasc@labvm:~/labs/devnet-src/netconf$
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:3f31bedc-5671-47ca-9781-4d3d7aadae24">
+<data>
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+<version>16.9</version>
+<boot-start-marker/>
+<boot-end-marker/>
+<banner>
+<motd>
+<banner>^C</banner>
+</motd>
+</banner>
+<service>
+<timestamps>
+<debug>
+<datetime>
+<msec/>
+</datetime>
+</debug>
+<log>
+<datetime>
+<msec/>
+</datetime>
+</log>
+</timestamps>
+</service>
+<platform>
+<console xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-platform">
+<output>virtual</output>
+</console>
+</platform>
+<hostname>CSR1kv</hostname>
+(output omitted)
+
 Step 2: Use Python to prettify the XML
+import xml.dom.minidom
+
+print(xml.dom.minidom.parseString(netconf_reply.xml).toprettyxml())
+
+devasc@labvm:~/labs/devnet-src/netconf$ python3 ncclient-netconf.py
+<?xml version="1.0" ?>
+<rpc-reply xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:3a5f6abc-76b4-436d-9e9a-7758091c28b7">
+<data>
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+<version>16.9</version>
+<boot-start-marker/>
+<boot-end-marker/>
+<banner>
+<motd>
+<banner>^C</banner>
+</motd>
+</banner>
+(output omitted)
+</data>
+</rpc-reply>
+devasc@labvm:~/labs/devnet-src/netconf$
+
 Step 3: Use a filter with get_config() to only retrieve a specific YANG model
+netconf_filter = """
+<filter>
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native" />
+</filter>
+"""
+netconf_reply = m.get_config(source="running", filter=netconf_filter)
+print(xml.dom.minidom.parseString(netconf_reply.xml).toprettyxml())
+
+devasc@labvm:~/labs/devnet-src/netconf$ python3 ncclient-netconf.py
+<?xml version="1.0" ?>
+<rpc-reply xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:4da5b736-1d33-47c3-8e3c-349414be0958">
+<data> <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+<version>16.9</version>
+<boot-start-marker/>
+<boot-end-marker/>
+<banner>
+<motd>
+<banner>^C</banner>
+</motd>
+</banner>
+<service>
+<timestamps>
+<debug>
+<datetime>
+<msec/>
+</datetime>
+</debug>
+<log>
+<datetime>
+<msec/>
+</datetime>
+</log>
+</timestamps>
+</service>
+<platform>
+<console xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-platform">
+<output>virtual</output>
+</console>
+</platform>
+<hostname>CSR1kv</hostname>
+(output omitted) </native>
 
 Part 5: Use ncclient to Configure a Device
 Step 1: Use ncclient to edit the hostname for the CSR1kv
+devasc@labvm:~/labs/devnet-src/netconf$ python3 ncclient-netconf.py
+<?xml version="1.0" ?>
+<rpc-reply xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:4da5b736-1d33-47c3-8e3c-349414be0958">
+<data>
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+(output omitted) <hostname>CSR1kv</hostname>
+(output omitted)
+
+netconf_hostname = """
+<config>
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+<hostname>NEWHOSTNAME</hostname>
+</native>
+</config>
+"""
+
+netconf_reply = m.edit_config(target="running", config=netconf_hostname)
+
+print(xml.dom.minidom.parseString(netconf_reply.xml).toprettyxml())
+
+<rpc-reply xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:e304b225-7951-4029-afd5-59e8e7edbaa0"> <ok/>
+</rpc-reply>
+devasc@labvm:~/labs/devnet-src/netconf$
+
 Step 2: Use ncclient to create a new loopback interface on R1
+netconf_loopback = """
+<config>
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+<interface>
+<Loopback>
+<name>1</name>
+<description>My first NETCONF loopback</description>
+<ip>
+<address>
+<primary>
+<address>10.1.1.1</address>
+<mask>255.255.255.0</mask>
+</primary>
+</address>
+</ip>
+</Loopback>
+</interface>
+</native>
+</config>
+"""
+
+netconf_reply = m.edit_config(target="running", config=netconf_loopback)
+print(xml.dom.minidom.parseString(netconf_reply.xml).toprettyxml())
+
+devasc@labvm:~/labs/devnet-src/netconf$ python3 ncclient-netconf.py
+(output omitted)
+<?xml version="1.0" ?>
+<rpc-reply xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:98437f47-7a93-4cac-9b9e-9bc8afc9dfa1"> <ok/>
+</rpc-reply>
+devasc@labvm:~/labs/devnet-src/netconf$
+
+CSR1kv>en
+CSR1kv# show ip interface brief
+Interface IP-Address OK? Method Status Protocol
+GigabitEthernet1 192.168.56.101 YES DHCP up up Loopback1 10.1.1.1 YES other up up
+CSR1kv# show run | section interface Loopback1
+interface Loopback1
+description My first NETCONF loopback
+ip address 10.1.1.1 255.255.255.0
+CSR1kv#
+
 Step 3: Attempt to create a new loopback interface with the same IPv4 address
+netconf_newloop = """
+<config>
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+<interface>
+<Loopback>
+<name>2</name>
+<description>My second NETCONF loopback</description>
+<ip>
+<address>
+<primary>
+<address>10.1.1.1</address>
+<mask>255.255.255.0</mask>
+</primary>
+</address>
+</ip>
+</Loopback>
+</interface>
+</native>
+</config>
+"""
+
+netconf_reply = m.edit_config(target="running", config=netconf_newloop)
+
+devasc@labvm:~/labs/devnet-src/netconf$ python3 ncclient-netconf.py
+Traceback (most recent call last):
+File "ncclient-netconf.py", line 80, in <module>
+netconf_reply = m.edit_config(target="running", config=netconf_newloop)
+File "/home/devasc/.local/lib/python3.8/site-packages/ncclient/manager.py", line 231, in execute
+return cls(self._session,
+File "/home/devasc/.local/lib/python3.8/site-packages/ncclient/operations/edit.py", line 69, in request
+return self._request(node)
+File "/home/devasc/.local/lib/python3.8/site-packages/ncclient/operations/rpc.py", line 348, in _request
+raise self._reply.error ncclient.operations.rpc.RPCError: inconsistent value: Device refused one or more commands
+devasc@labvm:~/labs/devnet-src/netconf$
+
+CSR1kv# show ip interface brief
+Interface IP-Address OK? Method Status Protocol
+GigabitEthernet1 192.168.56.101 YES DHCP up up Loopback1 10.1.1.1 YES other up up
 
 Part 6: Challenge: Modify the Program Used in This Lab
+
 
 Use RESTCONF to Access an IOS XE Device
 Part 1: Launch the VMs and Verify Connectivity
