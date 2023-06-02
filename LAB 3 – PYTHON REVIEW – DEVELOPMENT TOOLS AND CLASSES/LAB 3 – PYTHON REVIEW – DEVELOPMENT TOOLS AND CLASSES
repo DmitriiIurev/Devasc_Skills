@@ -23,6 +23,7 @@ Step 3: Use the interactive interpreter to print a string
 Hello World!
 >>> quit()
 devasc@labvm:~$
+
 Step 4: Open VS Code and create a script for Hello World
 devasc@labvm:~/labs/devnet-src/python$ python3 hello-world.py
 Hello World!
@@ -88,29 +89,267 @@ The value of x is 3
 >>> type(x)
 <class 'int'>
 
+>>> x=str(x)
+>>> type(x)
+<class 'str'>
+
+>>> num = 22/7
+>>> f"The value of num is {num}"
+'The value of num is 3.142857142857143'
+>>> pi = "{:.2f}".format(num)
+>>> f"The value of pi is {pi}."
+'The value of pi is 3.14.'
+>>>
+
 Part 4: Review Lists and Dictionaries
 Step 1: Create and manipulate a list
+>>> hostnames=["R1","R2","R3","S1","S2"]
+>>> type(hostnames)
+<class 'list'>
+>>> len(hostnames)
+5
+>>> hostnames
+['R1', 'R2', 'R3', 'S1', 'S2']
+
+>>> hostnames[0]
+'R1'
+>>> hostnames[-1]
+'S2'
+>>> hostnames[0]="RTR1"
+>>> hostnames
+['RTR1', 'R2', 'R3', 'S1', 'S2']
+>>> del hostnames[3]
+>>> hostnames
+['RTR1', 'R2', 'R3', 'S2']
+>>>
+
 Step 2: Create and manipulate a dictionary
+>>> ipAddress={"R1":"10.1.1.1","R2":"10.2.2.1","R3":"10.3.3.1"}
+>>> type(ipAddress)
+<class 'dict'>
+
+>>> ipAddress
+{'R1': '10.1.1.1', 'R2': '10.2.2.1', 'R3': '10.3.3.1'}
+>>> ipAddress['R1']
+'10.1.1.1' >>> ipAddress["S1"]="10.1.1.10"
+>>> ipAddress
+{'R1': '10.1.1.1', 'R2': '10.2.2.1', 'R3': '10.3.3.1', 'S1': '10.1.1.10'}
+>>>
+
+>>> ipAddress["R3"]=["10.3.3.1","10.3.3.2","10.3.3.3"]
+>>> ipAddress
+{'S1': '10.1.1.10', 'R2': '10.2.2.1', 'R1': '10.1.1.1', 'R3': ['10.3.3.1', '10.3.3.2', '10.3.3.3']}
+>>>
 
 Part 5: Review the Input Function
 Step 1: Create a variable to store user input and then display the value
+>>> firstName = input("What is your first name? ")
+What is your first name? User_Name
+>>> print("Hello " + firstName +"!")
+Hello User_Name!
+>>>
+
 Step 2: Create a script to collect personal information
+devasc@labvm:~/labs/devnet-src$ python3 person-info.py
+What is your first name? Bob
+What is your last name? Smith
+What is your location? London
+What is your age? 36
+Hi Bob Smith! Your location is London and you are 36 years old.
+devasc@labvm:~/labs/devnet-src$ ^C
 
 Part 6: Review If, For, and While Functions
 Step 1: Create an if/else function
+nativeVLAN = 1
+dataVLAN = 100
+if nativeVLAN == dataVLAN:
+print("The native VLAN and the data VLAN are the same.")
+else:
+print("The native VLAN and the data VLAN are different.")
+
 Step 2: Create an if/elif/else function
+aclNum = int(input("What is the IPv4 ACL number? "))
+if aclNum >= 1 and aclNum <= 99:
+print("This is a standard IPv4 ACL.")
+elif aclNum >=100 and aclNum <= 199:
+print("This is an extended IPv4 ACL.")
+else:
+print("This is not a standard or extended IPv4 ACL.")
+
+devasc@labvm:~/labs/devnet-src/python$ python3 if-acl.py
+What is the IPv4 ACL number? 10
+This is a standard IPv4 ACL.
+devasc@labvm:~/labs/devnet-src/python$ python3 if-acl.py
+What is the IPv4 ACL number? 110
+This is an extended IPv4 ACL.
+devasc@labvm:~/labs/devnet-src/python$ python3 if-acl.py
+What is the IPv4 ACL number? 200
+This is not a standard or extended IPv4 ACL.
+devasc@labvm:~/labs/devnet-src/python$
+
 Step 3: Create a for loop
+devasc@labvm:~/labs/devnet-src/python$ python3
+Python 3.8.2 (default, Mar 13 2020, 10:14:16)
+[GCC 9.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.>>> devices=["R1","R2","R3","S1","S2"]
+>>> for item in devices:
+... print(item)
+...
+R1
+R2
+R3
+S1
+S2
+>>>
+
+>>> for item in devices:
+... if "R" in item:
+... print(item)
+...
+R1
+R2
+R3
+>>>
+
+>>> switches=[]
+>>> for item in devices:
+... if "S" in item:
+... switches.append(item)
+...
+>>> switches
+['S1', 'S2']
+>>>
+
 Step 4: While Loop
+x=input("Enter a number to count to: ")
+x=int(x)
+y=1
+while y<=x:
+print(y)
+y=y+1
+
+devasc@labvm:~/labs/devnet-src/python$ python3 while-loop.py
+Enter a number to count to: 10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+devasc@labvm:~/labs/devnet-src/python$
+
+x=input("Enter a number to count to: ")
+x=int(x)
+y=1
+while True:
+print(y)
+y=y+1
+if y>x:
+break
+
 Step 5: Use a while loop to check for a user quit command
+while True:
+x=input("Enter a number to count to: ") if x == 'q' or x == 'quit': break
+x=int(x)
+y=1
+while True:
+print(y)
+y=y+1
+if y>x:
+break
+
+devasc@labvm:~/labs/devnet-src/python$ python3 while-loop.py
+Enter a number to count to: 3
+1
+2
+3
+Enter a number to count to: 5
+1
+2
+3
+4
+5
+Enter a number to count to: quit
+devasc@labvm:~/labs/devnet-src/python$
 
 Part 7: Review Methods for File Access
 Step 1: Create a program that reads an external file
+
+file=open("devices.txt","r")
+for item in file:
+print(item)
+file.close()
+
+devasc@labvm:~/labs/devnet-src/python$ python3 file-access.py
+Cisco 819 Router
+Cisco 881 Router
+Cisco 888 Router
+Cisco 1100 Router
+Cisco 4321 Router
+Cisco 4331 Router
+Cisco 4351 Router
+Cisco 2960 Catalyst Switch
+Cisco 3850 Catalyst Switch
+Cisco 7700 Nexus Switch
+Cisco Meraki MS220-8 Cloud Managed Switch
+Cisco Meraki MX64W Security Appliance
+Cisco Meraki MX84 Security Appliance
+Cisco Meraki MC74 VoIP Phone
+Cisco 3860 Catalyst Switch
+devasc@labvm:~/labs/devnet-src/python$
+
 Step 2: Remove the blank lines from the output
+
+file=open("devices.txt","r")
+for item in file: item=item.strip()
+print(item)
+file.close()
+
+devasc@labvm:~/labs/devnet-src/python$ python3 file-access.py
+Cisco 819 Router
+Cisco 881 Router
+Cisco 888 Router
+Cisco 1100 Router
+Cisco 4321 Router
+Cisco 4331 Router
+Cisco 4351 Router
+Cisco 2960 Catalyst Switch
+Cisco 3850 Catalyst Switch
+Cisco 7700 Nexus Switch
+Cisco Meraki MS220-8 Cloud Managed Switch
+Cisco Meraki MX64W Security Appliance
+Cisco Meraki MX84 Security Appliance
+Cisco Meraki MC74 VoIP Phone
+Cisco 3860 Catalyst Switch
+devasc@labvm:~/labs/devnet-src/python$
+
 Step 3: Copy the content of a file into a list variable
+
+devices=[]
+file=open("devices.txt","r")
+for item in file:
+item=item.strip() devices.append(item)
+file.close() print(devices)
+
+devasc@labvm:~/labs/devnet-src/python$ python3 file-access.py
+['Cisco 819 Router', 'Cisco 881 Router', 'Cisco 888 Router', 'Cisco 1100 Router', 'Cisco 4321 Router', 'Cisco 4331 Router', 'Cisco 4351 Router', 'Cisco 2960 Catalyst Switch', 'Cisco 3850 Catalyst Switch', 'Cisco 7700 Nexus Switch', 'Cisco Meraki MS220-
+8 Cloud Managed Switch', 'Cisco Meraki MX64W Security Appliance', 'Cisco Meraki MX84 Security Appliance', 'Cisco Meraki MC74 VoIP Phone', 'Cisco 3860 Catalyst Switch']
+devasc@labvm:~/labs/devnet-src/python$
+
 Step 4: Challenge: Create a script to allow the user to add devices
 
-Explore Python Development Tools
+devasc@labvm:~/labs/devnet-src/python$ python3 file-access-input.py
+Enter device name: Cisco 1941 Router
+Enter device name: Cisco 2950 Catalyst Switch
+Enter device name: exit
+All done!
+devasc@labvm:~/labs/devnet-src/python$
 
+Explore Python Development Tools
 Part 1: Launch the DEVASC VM
 
 Part 2: Review the Python Installation
