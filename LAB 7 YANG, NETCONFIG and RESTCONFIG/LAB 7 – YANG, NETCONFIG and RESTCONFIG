@@ -718,8 +718,6 @@ import json
 import requests
 requests.packages.urllib3.disable_warnings()
 
-
-
 Step 2: Create the variables that will be the components of the request
 api_url = "https://192.168.56.101/restconf/data/ietf-interfaces:interfaces/interface=Loopback2"
 
