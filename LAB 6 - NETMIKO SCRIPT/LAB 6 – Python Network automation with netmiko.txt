@@ -1,0 +1,15 @@
+Part 1: Connecting to a single iOS device
+- Sending single show command
+- -Sending multiple show commands
+- Send multiple configuration commands to a single device
+
+Part 2: Connect to multiple IOS devices
+- Send show commands to multiple devices
+- Send configuration commands to multiple devices
+- Run show commands and save the output
+- Backup the device configurations
+- Configure a subset of Interfaces
+- Send device configuration using an external file
+- Connect using a Python Dictionary
+- Execute a script with a Function or classes
+- Execute a script with a statements (if, ifelse, else)
