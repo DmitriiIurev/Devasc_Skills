@@ -1,0 +1,98 @@
+Software Version Control with Git
+
+Part 1: Launch the DEVASC VM
+
+Part 2: Initializing Git
+Step 1: Open a terminal in the DEVASC-LABVM
+Step 2: Initialize a Git Repository
+
+Part 3: Staging and Committing a File in the Repository
+Step 1: Create a file
+Step 2: Examine the Repository Status
+Step 3: Staging the File
+Step 4: Committing a File
+Step 5: Viewing the Commit History
+
+Part 4: Modifying the File and Tracking the Changes
+Step 1: Modify the file
+Step 2: Verify the change to the repository
+Step 3: Stage the modified file
+Step 4: Commit the staged file
+Step 5: Verify the changes in the repository
+
+Part 5: Branches and Merging
+Step 1: Create a new branch
+Step 2: Verify current branch
+Step 3: Checkout the new branch
+Step 4: Verify current branch
+Step 5: Stage the modified file in the feature branch
+Step 6: Commit the staged file in the feature branch
+Step 7: Checkout the master branch
+Step 8: Merge file contents from feature to master branch
+Step 9: Deleting a branch
+
+Part 6: Handling Merge Conflicts
+Step 1: Create a new branch test
+Step 2: Checkout the branch test
+Step 3: Verify the current contents of DEVASC.txt
+Step 4: Modify the contents of DEVASC.txt in the test branch
+Step 5: Verify the contents of the modified DEVASC.txt in the test branch
+Step 6: Stage and commit the test branch
+Step 7: Checkout the master branch
+Step 8: Modify the contents of DEVASC.txt in the master branch
+Step 9: Verify the contents of the modified DEVASC.txt in the master branch
+Step 10: Stage and commit the master branch
+Step 11: Attempt to merge the test branch into the master branch
+Step 12: Find the conflict
+Step 13: Manually edit the DEVASC.txt file to remove the conflicting text
+Step 14: Verify your edits of DEVASC.txt in the master branch
+Step 15: Stage and commit the master branch
+Step 16: Verify the commit
+
+Part 7: Integrating Git with GitHub
+Step 1: Create a GitHub Account
+Step 2: Log into your GitHub Account Create a Repository
+Step 3: Create a Repository
+Step 4: Create a new directory devasc-study-team
+Step 5: Change directory to devasc-study-team
+Step 6: Copy the DEVASC file
+Step 7: Initialize a new Git repository
+Step 8: Point Git repository to GitHub repository
+Step 9: Stage and Commit the DEVASC.txt file
+Step 10: Verify the commit
+Step 11: Send (push) the file from Git to GitHub
+Step 12: Verify file on GitHub
+
+Create a Python Unit Test
+
+Part 1: Launch the DEVASC VM
+
+Part 2: Explore Options in the unittest Framework
+
+Part 3: Test a Python Function with unittest
+Step 1: Review the test_data.py file
+Step 2: Create the json_search() function that you will be testing
+Step 3: Create some unit tests that will test if the function is working as intended
+Step 4: Run the test to see the initial results
+Step 5: Investigate and correct the first error in the recursive_json_search.py script
+Step 6: Run the test again to see if all errors in the script are now fixed
+Step 7: Investigate and correct the second error in the recursive_json_search.py script
+
+Parse Different Data Types with Python
+
+Part 1: Launch the DEVASC VM
+
+Part 2: Parse XML in Python
+Step 1: Build a script to parse the XML data
+Step 2: Run the script
+
+Part 3: Parse JSON in Python
+Step 1: Build a script to parse the JSON data
+Step 2: Run the script to print the JSON data and then modify it to print data of interest
+Step 3: Output the parsed JSON data in a YAML data format
+
+Part 4: Parse YAML in Python
+Step 1: Build a script to parse the YAML data
+Step 2: Run the script to print the YAML data and then modify it to print data of interest
+Step 3: Output the parsed YAML data in a JSON data format
+
