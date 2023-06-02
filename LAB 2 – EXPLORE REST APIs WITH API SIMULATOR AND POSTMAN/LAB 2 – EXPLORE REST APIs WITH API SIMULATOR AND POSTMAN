@@ -1,19 +1,19 @@
 Part 1: Explore API Documentation Using the API Simulator
 • Task preparation and implementation:
-Step 1: Open the Chromium Web Browser
+Open the Chromium Web Browser
 Double-click the Chromium Web Browser icon on the desktop
-Step 2: Connect to the School Library Web Site
+Connect to the School Library Web Site
 Open the School Library website, in the address bar type: library.demo.local and press return to go there.
-Step 3: Go to the API docs page
+Go to the API docs page
 In the upper right corner where it states, Click here for API docs, click here to go to the API documentation web page.
-Step 4: List books using the GET /books API
+List books using the GET /books API
 Click anywhere on the bar for the GET /books API. This API returns a list of books in the school library.
-Step 5: Use the Try it out feature in the API documentation
+Use the Try it out feature in the API documentation
 In the GET /books API documentation, click the Try it out button.
-Step 6: Use the curl command in a terminal window
+Use the curl command in a terminal window
 Select the curl command, right-click and Copy it to your clipboard:
 cmd:curl -X GET "http://library.demo.local/api/v1/books" -H "accept: application/json"
-Open a terminal window. Right-click and Paste the contents from the clipboard into the terminal and press Enter.
+Open a terminal window.
 devasc@labvm:~$ curl -X GET "http://library.demo.local/api/v1/books" -H "accept: application/json"
 Step 7: List books with their ISBN using the GET /books API
 Return to the School Library API web site's GET /books API.
@@ -23,8 +23,8 @@ Step 8: Get a token using the POST /loginViaBasic API
 Click the API POST /loginViaBasic.
 Click Try it out, and then click Execute.
 Enter the following information and click Sign in:
-• Username: cisco
-• Password: Cisco123!
+-Username: cisco
+-Password: Cisco123!
 Select the information between the quotes, right-click and Copy the information into your clipboard.
 { "token": "cisco|KZZzteQbC5iV3HKEzB7hCJ6qHQXen4rLGh72YJKeVfs"}
 Scroll up to the top of the School Library API page and click the green Authorize button. 
@@ -124,12 +124,7 @@ To verify that the API request was a success, you will now see a response that i
 Click Body to see the response.
 Step 6: Use additional parameters with the Get /books API
 Go to the School Library API web site.
-Notice the parameters that are available:
-o includeISBN: Includes in the results the ISBN numbers. Default=false
-o sortBy: Sort results using the specified parameter. Default=id
-o author: Return only books by the given Author.
-o page: Used to specify a page number.
-b. Click Try it out. 
+Click Try it out. 
 Under parameters:
 Click includeISBN and select true
 Click sortBy and select author
@@ -142,6 +137,7 @@ Click Send.
 
 • Task troubleshooting:
 • Task verification:
+Checkout screenshots
 
 Part 3: Use Python to Add 100 Books to the API Simulator
 • Task preparation and implementation:
@@ -179,16 +175,18 @@ Terry Rocha
 Quit the Python interpreter when done investigating the faker library.
 >>> quit()
 devasc@labvm:~/labs/devnet-src/school-library$
-Step 4: Review the function variables
-sudo nano add100RandomBooks.py
+Review the function variables
+devasc@labvm:~$sudo nano add100RandomBooks.py
 The two functions in the program use three variables to get an authorization token from the School Library API service.
 Step 5: Review the getAuthToken function
 paste commands
 Step 6: Review the addBook function
 paste commands
-Step 7: Review the code that invokes the two functions
-python3 add100RandomBooks.py
-Step 8: Run and verify the add100RandomBooks.py program
+Review the code that invokes the two functions
+devasc@labvm:~$python3 add100RandomBooks.py
+Run and verify the add100RandomBooks.py program
 
 • Task troubleshooting:
+-
 • Task verification:
+Checkout screenshots
